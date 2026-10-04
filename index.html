@@ -81,7 +81,7 @@
       100% { transform: translateY(-110vh) scale(1.1) rotate(25deg); opacity: 0; }
     }
 
-    /* Airplane */
+    /* Daytime Airplane */
     .airplane-fly {
       position: fixed;
       top: 14%;
@@ -346,7 +346,6 @@
       width: 100%;
     }
 
-    /* Cat Animation Track across name cards */
     .cat-track {
       position: absolute;
       top: -38px;
@@ -367,30 +366,19 @@
     }
 
     @keyframes catAngadaaiAndWalk {
-      /* Stage 1: Sleeping peacefully on Bhanu's card (0-2s) */
       0%   { left: 5%; transform: translateY(12px) scale(0.9, 0.75); opacity: 1; }
       12%  { left: 5%; transform: translateY(12px) scale(0.9, 0.75); }
-
-      /* Stage 2: Angadaai! Arch back up (15-22%) */
-      16%  { left: 5%; transform: translateY(4px) scale(0.85, 1.25); } /* Arch up */
-      20%  { left: 5%; transform: translateY(14px) scale(1.15, 0.8); } /* Front stretch */
-      24%  { left: 6%; transform: translateY(8px) scale(1, 1); }      /* Ready to walk */
-
-      /* Stage 3: Walk across Bhanu's card (24-42%) */
+      16%  { left: 5%; transform: translateY(4px) scale(0.85, 1.25); }
+      20%  { left: 5%; transform: translateY(14px) scale(1.15, 0.8); }
+      24%  { left: 6%; transform: translateY(8px) scale(1, 1); }
       30%  { left: 16%; transform: translateY(6px) rotate(2deg); }
       36%  { left: 28%; transform: translateY(8px) rotate(-2deg); }
       42%  { left: 40%; transform: translateY(6px) rotate(0deg); }
-
-      /* Stage 4: Playful Jump over the gap into Gun's card (44-54%) */
-      47%  { left: 48%; transform: translateY(-24px) rotate(-14deg); } /* In the air! */
-      52%  { left: 56%; transform: translateY(7px) rotate(4deg); }   /* Landed smoothly */
-
-      /* Stage 5: Strolling happily across Gun's card (54-76%) */
+      47%  { left: 48%; transform: translateY(-24px) rotate(-14deg); }
+      52%  { left: 56%; transform: translateY(7px) rotate(4deg); }
       60%  { left: 66%; transform: translateY(6px) rotate(-2deg); }
       68%  { left: 78%; transform: translateY(8px) rotate(2deg); }
       74%  { left: 88%; transform: translateY(6px) rotate(0deg); }
-
-      /* Stage 6: Joyful jump off-screen right! (78-100%) */
       80%  { left: 95%; transform: translateY(-18px) rotate(18deg); opacity: 1; }
       86%  { left: 104%; transform: translateY(35px) rotate(32deg); opacity: 0; }
       100% { left: 105%; transform: translateY(35px); opacity: 0; }
@@ -708,7 +696,7 @@
     }
 
     /* ----------------------------------------------------
-       TEDDY HUG & STEAMING CHAI/COFFEE POPUP
+       SUPER CUTE MILK & MOCHA HUG MODAL
     ---------------------------------------------------- */
     #welcome-modal {
       position: fixed;
@@ -732,7 +720,7 @@
     }
 
     .modal-content-box {
-      background: rgba(24, 19, 44, 0.92);
+      background: rgba(24, 19, 44, 0.94);
       border: 1px solid rgba(179, 157, 219, 0.4);
       border-radius: 34px;
       padding: 34px 22px 28px 22px;
@@ -765,100 +753,45 @@
       font-size: clamp(1.6rem, 4vw, 2.2rem);
       font-weight: 600;
       color: #ffffff;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    /* Teddy Bear Stage */
-    .teddy-stage {
+    /* Fluid Teddy Hug Stage */
+    .teddy-stage-wrapper {
       position: relative;
-      height: 165px;
       width: 100%;
-      margin: 8px 0 12px 0;
+      height: 170px;
+      margin: 10px 0 12px 0;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow: visible;
     }
 
-    .teddy-actor {
-      position: absolute;
-      width: 88px;
-      height: 104px;
-      transform-origin: bottom center;
+    .fluid-teddy-hug-gif {
+      width: 175px;
+      height: 155px;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 22px rgba(126, 87, 194, 0.35));
+      animation: cutePopIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    /* Teddies Waddle and Tight Squish Hug */
-    .teddy-left {
-      animation: teddyWaddleLeft 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    @keyframes cutePopIn {
+      0% { transform: scale(0.65); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
-    @keyframes teddyWaddleLeft {
-      0%   { transform: translateX(-220px) rotate(-8deg) translateY(0); }
-      20%  { transform: translateX(-160px) rotate(8deg) translateY(-8px); }
-      40%  { transform: translateX(-105px) rotate(-8deg) translateY(0); }
-      60%  { transform: translateX(-50px) rotate(8deg) translateY(-8px); }
-      80%  { transform: translateX(-15px) rotate(-3deg) translateY(0); }
-      92%  { transform: translateX(-2px) rotate(6deg) scale(1.08, 0.88); } /* Hug squish! */
-      100% { transform: translateX(-2px) rotate(5deg) scale(1, 1); }
-    }
-
-    .teddy-right {
-      animation: teddyWaddleRight 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-    }
-
-    @keyframes teddyWaddleRight {
-      0%   { transform: translateX(220px) rotate(8deg) translateY(0); }
-      20%  { transform: translateX(160px) rotate(-8deg) translateY(-8px); }
-      40%  { transform: translateX(105px) rotate(8deg) translateY(0); }
-      60%  { transform: translateX(50px) rotate(-8deg) translateY(-8px); }
-      80%  { transform: translateX(15px) rotate(3deg) translateY(0); }
-      92%  { transform: translateX(2px) rotate(-6deg) scale(1.08, 0.88); } /* Hug squish! */
-      100% { transform: translateX(2px) rotate(-5deg) scale(1, 1); }
-    }
-
-    .arm-left-wrap {
-      transform-origin: 60px 65px;
-      animation: wrapArmRight 2.4s ease-out forwards;
-    }
-    @keyframes wrapArmRight {
-      0%, 75% { transform: rotate(10deg); }
-      92%, 100% { transform: rotate(40deg) translate(2px, -3px); }
-    }
-
-    .arm-right-wrap {
-      transform-origin: 40px 65px;
-      animation: wrapArmLeft 2.4s ease-out forwards;
-    }
-    @keyframes wrapArmLeft {
-      0%, 75% { transform: rotate(-10deg); }
-      92%, 100% { transform: rotate(-40deg) translate(-2px, -3px); }
-    }
-
-    .happy-eyes {
-      opacity: 0;
-      animation: openHappyEyes 0.4s ease-in forwards;
-      animation-delay: 2s;
-    }
-    .normal-eyes {
-      animation: hideNormalEyes 0.4s ease-in forwards;
-      animation-delay: 2s;
-    }
-    @keyframes openHappyEyes { 0% { opacity: 0; } 100% { opacity: 1; } }
-    @keyframes hideNormalEyes { 0% { opacity: 1; } 100% { opacity: 0; } }
-
-    /* Heart Burst */
+    /* Popping Hearts around Hug */
     .hug-heart-burst {
       position: absolute;
       font-size: 1.5rem;
       pointer-events: none;
       opacity: 0;
       animation: burstHearts 2.4s ease-out infinite;
-      animation-delay: 2s;
     }
-    .hug-heart-burst:nth-child(1) { top: 15px; left: 47%; animation-delay: 2.1s; }
-    .hug-heart-burst:nth-child(2) { top: -14px; left: 40%; animation-delay: 2.3s; }
-    .hug-heart-burst:nth-child(3) { top: 5px; left: 56%; animation-delay: 2.5s; }
-    .hug-heart-burst:nth-child(4) { top: -20px; left: 49%; font-size: 2.1rem; animation-delay: 2.7s; }
+    .hug-heart-burst:nth-child(1) { top: 15px; left: 24%; animation-delay: 0.4s; }
+    .hug-heart-burst:nth-child(2) { top: -8px; left: 47%; animation-delay: 0.8s; font-size: 2rem; }
+    .hug-heart-burst:nth-child(3) { top: 22px; right: 24%; animation-delay: 1.2s; }
+    .hug-heart-burst:nth-child(4) { top: 60px; right: 18%; animation-delay: 1.6s; }
 
     @keyframes burstHearts {
       0% { transform: translateY(10px) scale(0); opacity: 0; }
@@ -866,33 +799,30 @@
       100% { transform: translateY(-58px) scale(1); opacity: 0; }
     }
 
-    /* ----------------------------------------------------
-       AFTER-HUG STEAMING CHAI & COFFEE CUPS ANIMATION
-    ---------------------------------------------------- */
+    /* After-Hug Steaming Cups */
     .after-hug-treat-stage {
       position: relative;
-      height: 70px;
+      height: 64px;
       width: 100%;
       margin-top: 4px;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
       display: flex;
       justify-content: center;
       align-items: center;
       opacity: 0;
       animation: showTreatStage 1s ease-out forwards;
-      animation-delay: 2.8s; /* Appears after hug! */
+      animation-delay: 1.2s;
     }
 
     @keyframes showTreatStage {
-      0%   { opacity: 0; transform: translateY(12px) scale(0.9); }
+      0%   { opacity: 0; transform: translateY(10px) scale(0.9); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
-    /* Left Cup (Chai) slides in from left */
     .treat-cup-left {
       position: absolute;
-      animation: slideInChaiCup 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-      animation-delay: 2.9s;
+      animation: slideInChaiCup 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 1.3s;
       transform: translateX(-140px);
     }
     @keyframes slideInChaiCup {
@@ -901,11 +831,10 @@
       100% { transform: translateX(-26px) rotate(4deg); }
     }
 
-    /* Right Cup (Coffee) slides in from right */
     .treat-cup-right {
       position: absolute;
-      animation: slideInCoffeeCup 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-      animation-delay: 2.9s;
+      animation: slideInCoffeeCup 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 1.3s;
       transform: translateX(140px);
     }
     @keyframes slideInCoffeeCup {
@@ -919,7 +848,7 @@
       font-size: 1.1rem;
       opacity: 0;
       animation: sparkClink 0.8s ease-out forwards;
-      animation-delay: 4.1s;
+      animation-delay: 2.4s;
     }
     @keyframes sparkClink {
       0%   { transform: scale(0); opacity: 0; }
@@ -927,7 +856,6 @@
       100% { transform: scale(1); opacity: 0.9; }
     }
 
-    /* Steaming bhaf waves */
     .steam-line {
       stroke: rgba(255, 255, 255, 0.75);
       stroke-width: 1.6;
@@ -948,7 +876,7 @@
       font-size: 0.82rem;
       color: #fed7aa;
       font-weight: 600;
-      margin-top: 4px;
+      margin-top: 2px;
     }
 
     .modal-subtitle {
@@ -998,110 +926,51 @@
   <div class="floating-hearts-container" id="hearts-bg"></div>
 
   <!-- -----------------------------------------------------------------
-       CUTE INTRO MODAL: TEDDY HUG + STEAMING CHAI/COFFEE CLINK
+       CUTE INTRO MODAL: MILK & MOCHA HUG + STEAMING CHAI/COFFEE CLINK
   ----------------------------------------------------------------- -->
   <div id="welcome-modal">
     <div class="modal-content-box" onclick="event.stopPropagation()">
       <div class="greeting-badge" id="dynamic-greeting-badge">Good Morning ☀️</div>
       <h2 class="greeting-title" id="dynamic-greeting-title">Bhanu & Gun</h2>
 
-      <!-- Teddies Waddling and Hugging -->
-      <div class="teddy-stage">
+      <!-- Fluid Super-Cute Milk & Mocha Hug Animation -->
+      <div class="teddy-stage-wrapper">
         <div class="hug-heart-burst">💖</div>
+        <div class="hug-heart-burst">💕</div>
         <div class="hug-heart-burst">🌸</div>
         <div class="hug-heart-burst">✨</div>
-        <div class="hug-heart-burst">💕</div>
 
-        <!-- Left Teddy (Bhanu) -->
-        <div class="teddy-actor teddy-left">
-          <svg viewBox="0 0 100 115" width="100%" height="100%">
-            <circle cx="28" cy="24" r="14" fill="#a0714b"/>
-            <circle cx="28" cy="24" r="8" fill="#d7a982"/>
-            <circle cx="72" cy="24" r="14" fill="#a0714b"/>
-            <circle cx="72" cy="24" r="8" fill="#d7a982"/>
-            <ellipse cx="50" cy="74" rx="26" ry="28" fill="#a0714b"/>
-            <ellipse cx="50" cy="75" rx="17" ry="19" fill="#d7a982"/>
-            <circle cx="50" cy="42" r="26" fill="#a0714b"/>
-            <ellipse cx="50" cy="49" rx="13" ry="9" fill="#d7a982"/>
-            <polygon points="46,45 54,45 50,50" fill="#3e2723"/>
-            <g class="normal-eyes">
-              <circle cx="41" cy="38" r="3.2" fill="#2d1d17"/>
-              <circle cx="59" cy="38" r="3.2" fill="#2d1d17"/>
-            </g>
-            <!-- Happy Smiling Hug Eyes (^ ^) -->
-            <g class="happy-eyes" stroke="#2d1d17" stroke-width="2.5" fill="none" stroke-linecap="round">
-              <path d="M37,40 Q41,34 45,40"/>
-              <path d="M55,40 Q59,34 63,40"/>
-            </g>
-            <ellipse cx="36" cy="46" rx="4.5" ry="3" fill="#f48fb1" opacity="0.75"/>
-            <ellipse cx="64" cy="46" rx="4.5" ry="3" fill="#f48fb1" opacity="0.75"/>
-            <!-- Hug Arm -->
-            <ellipse class="arm-left-wrap" cx="68" cy="65" rx="17" ry="8" fill="#a0714b"/>
-          </svg>
-        </div>
-
-        <!-- Right Teddy (Gun) -->
-        <div class="teddy-actor teddy-right">
-          <svg viewBox="0 0 100 115" width="100%" height="100%">
-            <circle cx="72" cy="24" r="14" fill="#c69062"/>
-            <circle cx="72" cy="24" r="8" fill="#ebd0b5"/>
-            <circle cx="28" cy="24" r="14" fill="#c69062"/>
-            <circle cx="28" cy="24" r="8" fill="#ebd0b5"/>
-            <!-- Ribbon -->
-            <ellipse cx="28" cy="16" rx="6" ry="4" fill="#b39ddb" transform="rotate(-20 28 16)"/>
-            <ellipse cx="36" cy="18" rx="6" ry="4" fill="#b39ddb" transform="rotate(20 36 18)"/>
-            <circle cx="32" cy="17" r="3" fill="#ffca28"/>
-            <ellipse cx="50" cy="74" rx="26" ry="28" fill="#c69062"/>
-            <ellipse cx="50" cy="75" rx="17" ry="19" fill="#ebd0b5"/>
-            <circle cx="50" cy="42" r="26" fill="#c69062"/>
-            <ellipse cx="50" cy="49" rx="13" ry="9" fill="#ebd0b5"/>
-            <polygon points="46,45 54,45 50,50" fill="#3e2723"/>
-            <g class="normal-eyes">
-              <circle cx="41" cy="38" r="3.2" fill="#2d1d17"/>
-              <circle cx="59" cy="38" r="3.2" fill="#2d1d17"/>
-            </g>
-            <!-- Happy Smiling Hug Eyes (^ ^) -->
-            <g class="happy-eyes" stroke="#2d1d17" stroke-width="2.5" fill="none" stroke-linecap="round">
-              <path d="M37,40 Q41,34 45,40"/>
-              <path d="M55,40 Q59,34 63,40"/>
-            </g>
-            <ellipse cx="36" cy="46" rx="4.5" ry="3" fill="#f48fb1" opacity="0.8"/>
-            <ellipse cx="64" cy="46" rx="4.5" ry="3" fill="#f48fb1" opacity="0.8"/>
-            <!-- Hug Arm -->
-            <ellipse class="arm-right-wrap" cx="32" cy="65" rx="17" ry="8" fill="#c69062"/>
-          </svg>
-        </div>
+        <!-- High quality transparent animated bear hug sticker -->
+        <img class="fluid-teddy-hug-gif" 
+             src="https://media.tenor.com/t0b1K28x2kAAAAAi/milk-and-mocha-hug.gif" 
+             alt="Teddy Hug" 
+             onerror="this.src='https://media.tenor.com/2Y4a1xZ5iXQAAAAi/bubu-dudu-hug.gif'" />
       </div>
 
-      <!-- After-Hug Sequence: Steaming Chai and Coffee Cups sliding in from Left & Right -->
+      <!-- After-Hug Steaming Chai & Coffee Cups -->
       <div class="after-hug-treat-stage">
         
         <!-- Left Steaming Chai Cup (Bhanu's Chai) -->
         <div class="treat-cup-left">
-          <svg width="46" height="52" viewBox="0 0 46 52">
-            <!-- Rising Steam (Bhaf) -->
+          <svg width="44" height="48" viewBox="0 0 46 52">
             <path class="steam-line" d="M14,14 Q12,8 14,3"/>
             <path class="steam-line" d="M20,13 Q22,7 20,2"/>
             <path class="steam-line" d="M26,14 Q24,8 26,3"/>
-            <!-- Desi Chai Cup -->
             <path d="M8,16 L32,16 L28,42 Q28,47 20,47 Q12,47 12,42 Z" fill="#d97706"/>
-            <!-- Warm chai tone -->
             <ellipse cx="20" cy="16" rx="12" ry="3" fill="#fbbf24"/>
             <path d="M30,22 Q37,22 37,28 Q37,34 29,34" stroke="#d97706" stroke-width="3.2" fill="none"/>
           </svg>
         </div>
 
-        <!-- Clink Spark -->
+        <!-- Sparkle -->
         <div class="steam-clink-spark">✨</div>
 
         <!-- Right Steaming Coffee Mug (Gun's Coffee) -->
         <div class="treat-cup-right">
-          <svg width="46" height="52" viewBox="0 0 46 52">
-            <!-- Rising Steam (Bhaf) -->
+          <svg width="44" height="48" viewBox="0 0 46 52">
             <path class="steam-line" d="M16,14 Q18,8 16,3"/>
             <path class="steam-line" d="M22,13 Q20,7 22,2"/>
             <path class="steam-line" d="M28,14 Q30,8 28,3"/>
-            <!-- Cute Lavender Coffee Mug -->
             <rect x="10" y="16" width="22" height="26" rx="5" fill="#a78bfa"/>
             <ellipse cx="21" cy="17" rx="10" ry="2.5" fill="#78350f"/>
             <path d="M32,22 Q39,22 39,29 Q39,36 32,36" stroke="#a78bfa" stroke-width="3.2" fill="none"/>
@@ -1199,26 +1068,18 @@
       <div class="cat-track">
         <div class="animated-kitty">
           <svg viewBox="0 0 54 44" width="100%" height="100%">
-            <!-- Tail -->
             <path d="M42,26 Q52,18 48,8" stroke="#f97316" stroke-width="4" stroke-linecap="round" fill="none"/>
-            <!-- Body -->
             <ellipse cx="28" cy="26" rx="16" ry="12" fill="#fb923c"/>
             <ellipse cx="28" cy="27" rx="10" ry="8" fill="#fef08a" opacity="0.65"/>
-            <!-- Cute Back Legs -->
             <circle cx="38" cy="33" r="4.5" fill="#ea580c"/>
-            <!-- Front Legs -->
             <circle cx="16" cy="33" r="4.5" fill="#ea580c"/>
-            <!-- Head -->
             <circle cx="15" cy="18" r="11" fill="#fb923c"/>
-            <!-- Ears -->
             <polygon points="7,13 11,4 16,11" fill="#ea580c"/>
             <polygon points="15,11 20,4 23,13" fill="#ea580c"/>
             <polygon points="9,12 11,6 14,11" fill="#f472b6"/>
-            <!-- Face -->
             <ellipse cx="11" cy="19" rx="1.6" ry="2" fill="#1e293b"/>
             <ellipse cx="18" cy="19" rx="1.6" ry="2" fill="#1e293b"/>
             <polygon points="14,21 16,21 15,23" fill="#f43f5e"/>
-            <!-- Whiskers -->
             <line x1="6" y1="21" x2="1" y2="20" stroke="#fef08a" stroke-width="1.2"/>
             <line x1="6" y1="23" x2="2" y2="25" stroke="#fef08a" stroke-width="1.2"/>
             <line x1="21" y1="21" x2="26" y2="20" stroke="#fef08a" stroke-width="1.2"/>
@@ -1423,7 +1284,6 @@
     const SONG_FOR_BHANU = "https://open.spotify.com/track/6qzX4aJ7eL7vJ5a8yqYVvA"; 
     /* ===================================================================== */
 
-    // Target: 3 November 2026, 08:00 AM IST
     const targetDate = new Date('2026-11-03T08:00:00+05:30').getTime();
     const startDate = new Date('2026-10-01T00:00:00+05:30').getTime();
 
@@ -1806,7 +1666,6 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
-      // Render Jugnu
       fireflies.forEach(f => {
         f.alpha += f.alphaDelta;
         if (f.alpha > 1 || f.alpha < 0) f.alphaDelta = -f.alphaDelta;
@@ -1896,7 +1755,7 @@
       }, 1600);
     }
 
-    // Initialize all modules
+    // Startup
     window.addEventListener('DOMContentLoaded', () => {
       setDynamicGreeting();
       resizeCanvas();
