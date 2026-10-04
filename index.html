@@ -14,8 +14,8 @@
       --lavender-soft: #d1c4e9;
       --lavender-deep: #7e57c2;
       --bg-dark-1: #0d0c18;
-      --card-bg: rgba(20, 16, 36, 0.72);
-      --card-border: rgba(179, 157, 219, 0.24);
+      --card-bg: rgba(20, 16, 36, 0.76);
+      --card-border: rgba(179, 157, 219, 0.28);
       --sunflower-petal: #ffca28;
       --sway-speed: 3.5s;
       --sway-angle: 4deg;
@@ -31,13 +31,13 @@
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       min-height: 100vh;
-      background-color: var(--bg-dark-1);
+      background-color: #1a1630;
       color: #f3e8ff;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Atmospheric Dynamic Canvas (Handles Sky, Rain, Clouds, Stars) */
+    /* Atmospheric Dynamic Canvas (Day, Night, Rain, Clouds) */
     #atmosphere-canvas {
       position: fixed;
       inset: 0;
@@ -52,9 +52,9 @@
       inset: 0;
       z-index: 1;
       pointer-events: none;
-      background: radial-gradient(circle at 15% 20%, rgba(126, 87, 194, 0.18), transparent 45%),
-                  radial-gradient(circle at 85% 25%, rgba(179, 157, 219, 0.14), transparent 50%),
-                  radial-gradient(circle at 50% 85%, rgba(255, 202, 40, 0.08), transparent 55%);
+      background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.12), transparent 45%),
+                  radial-gradient(circle at 80% 30%, rgba(179, 157, 219, 0.15), transparent 50%),
+                  radial-gradient(circle at 50% 85%, rgba(255, 202, 40, 0.1), transparent 55%);
       mix-blend-mode: screen;
     }
 
@@ -76,7 +76,7 @@
 
     @keyframes floatUp {
       0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
-      15% { opacity: 0.5; }
+      15% { opacity: 0.55; }
       80% { opacity: 0.35; }
       100% { transform: translateY(-110vh) scale(1.1) rotate(25deg); opacity: 0; }
     }
@@ -90,22 +90,22 @@
       pointer-events: none;
       display: flex;
       align-items: center;
-      animation: flyAcross 38s linear infinite;
-      opacity: 0.65;
+      animation: flyAcross 36s linear infinite;
+      opacity: 0.75;
     }
 
     .contrail {
-      width: 90px;
+      width: 100px;
       height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6));
       border-radius: 2px;
       margin-right: -4px;
     }
 
     @keyframes flyAcross {
       0% { transform: translateX(0) translateY(0); opacity: 0; }
-      5% { opacity: 0.7; }
-      90% { opacity: 0.7; }
+      5% { opacity: 0.85; }
+      90% { opacity: 0.85; }
       100% { transform: translateX(calc(100vw + 240px)) translateY(35px); opacity: 0; }
     }
 
@@ -122,7 +122,7 @@
       justify-content: space-around;
       align-items: flex-end;
       padding: 0 8px;
-      opacity: 0.9;
+      opacity: 0.95;
       mask-image: linear-gradient(to top, rgba(0,0,0,1) 80%, transparent);
       -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 80%, transparent);
     }
@@ -158,7 +158,7 @@
       align-items: center;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       border-radius: 100px;
       padding: 10px 22px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
@@ -195,7 +195,7 @@
     }
 
     .action-btn {
-      background: rgba(179, 157, 219, 0.12);
+      background: rgba(179, 157, 219, 0.15);
       border: 1px solid var(--card-border);
       color: #ede9fe;
       padding: 7px 14px;
@@ -210,7 +210,7 @@
     }
 
     .action-btn:hover {
-      background: rgba(179, 157, 219, 0.28);
+      background: rgba(179, 157, 219, 0.3);
       transform: translateY(-1px);
     }
 
@@ -219,7 +219,7 @@
       text-align: center;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
       border-radius: 28px;
       padding: 34px 20px;
       position: relative;
@@ -268,7 +268,7 @@
 
     .digit-card {
       background: rgba(13, 10, 24, 0.75);
-      border: 1px solid rgba(179, 157, 219, 0.2);
+      border: 1px solid rgba(179, 157, 219, 0.25);
       border-radius: 18px;
       padding: 14px 6px;
       display: flex;
@@ -315,11 +315,11 @@
 
     .progress-bar-container {
       height: 9px;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.12);
       border-radius: 20px;
       overflow: hidden;
       position: relative;
-      border: 1px solid rgba(179, 157, 219, 0.15);
+      border: 1px solid rgba(179, 157, 219, 0.2);
     }
 
     .progress-bar-fill {
@@ -339,7 +339,7 @@
     }
 
     /* ----------------------------------------------------
-       WEATHER HUB & PHYSICS-BASED DUAL CAT CANVAS
+       WEATHER HUB & DUAL PHYSICS-BASED CAT CANVAS
     ---------------------------------------------------- */
     .weather-wrapper {
       position: relative;
@@ -371,7 +371,7 @@
     .weather-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       border-radius: 24px;
       padding: 22px;
       position: relative;
@@ -426,7 +426,7 @@
     .weather-condition-badge {
       font-size: 0.74rem;
       font-weight: 600;
-      background: rgba(179, 157, 219, 0.15);
+      background: rgba(179, 157, 219, 0.18);
       border: 1px solid var(--card-border);
       padding: 4px 10px;
       border-radius: 20px;
@@ -466,7 +466,7 @@
       grid-template-columns: 1fr 1fr 1fr;
       gap: 8px;
       padding-top: 14px;
-      border-top: 1px solid rgba(179, 157, 219, 0.15);
+      border-top: 1px solid rgba(179, 157, 219, 0.18);
       font-size: 0.75rem;
     }
 
@@ -499,7 +499,7 @@
     .moment-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       border-radius: 20px;
       padding: 18px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -593,7 +593,7 @@
     .spotify-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
       border-radius: 24px;
       padding: 18px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
@@ -629,7 +629,7 @@
     }
 
     .change-song-btn {
-      background: rgba(179, 157, 219, 0.12);
+      background: rgba(179, 157, 219, 0.14);
       border: 1px solid var(--card-border);
       color: var(--lavender-soft);
       padding: 5px 11px;
@@ -641,7 +641,7 @@
     }
 
     .change-song-btn:hover {
-      background: rgba(179, 157, 219, 0.28);
+      background: rgba(179, 157, 219, 0.3);
       color: #ffffff;
     }
 
@@ -654,7 +654,7 @@
     }
 
     /* ----------------------------------------------------
-       IN-BUILT CUTE TEDDY BEAR HUG MODAL (PURE VECTOR/CANVAS)
+       TEDDY BEAR HUG MODAL
     ---------------------------------------------------- */
     #welcome-modal {
       position: fixed;
@@ -714,7 +714,6 @@
       margin-bottom: 6px;
     }
 
-    /* Embedded Teddy Hug Scene */
     .teddy-hug-scene {
       position: relative;
       width: 100%;
@@ -859,11 +858,11 @@
 </head>
 <body>
 
-  <!-- Sky Canvas for Stars, Fireflies, Rain & Clouds -->
+  <!-- Sky Canvas for Live Day, Golden Hour, Night, Rain, Clouds -->
   <canvas id="atmosphere-canvas"></canvas>
   <div class="ambient-mesh"></div>
 
-  <!-- Daytime Flight Silhouette -->
+  <!-- Daytime Flight Silhouette (Shows during daytime) -->
   <div class="airplane-fly" id="day-airplane">
     <div class="contrail"></div>
     <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff" style="transform: rotate(45deg);">
@@ -882,7 +881,6 @@
       <div class="greeting-badge" id="dynamic-greeting-badge">Good Morning ☀️</div>
       <h2 class="greeting-title" id="dynamic-greeting-title">Bhanu & Gun</h2>
 
-      <!-- In-built Canvas Teddy Hug Stage (Guaranteed to render always) -->
       <div class="teddy-hug-scene">
         <div class="hug-heart-burst">💖</div>
         <div class="hug-heart-burst">💕</div>
@@ -891,9 +889,7 @@
         <canvas id="modal-teddy-canvas" width="260" height="160"></canvas>
       </div>
 
-      <!-- After-Hug Steaming Chai & Coffee Cups -->
       <div class="after-hug-treat-stage">
-        
         <div class="treat-cup-left">
           <svg width="44" height="48" viewBox="0 0 46 52">
             <path class="steam-line" d="M14,14 Q12,8 14,3"/>
@@ -917,7 +913,6 @@
             <path d="M32,22 Q39,22 39,29 Q39,36 32,36" stroke="#a78bfa" stroke-width="3.2" fill="none"/>
           </svg>
         </div>
-
       </div>
 
       <div class="treat-status-text" id="treat-timing-text">A warm cutting chai & coffee together ☕✨</div>
@@ -942,7 +937,7 @@
     <header class="top-nav">
       <div class="nav-badge">
         <span class="pulse-dot"></span>
-        <span>LIVE SYNC ACTIVE • HIGH PRECISION</span>
+        <span id="sky-sync-status">LIVE SYNC ACTIVE • HIGH PRECISION</span>
       </div>
       <div class="nav-actions">
         <button class="action-btn" id="sound-btn" onclick="toggleSound()">
@@ -1001,11 +996,11 @@
     </section>
 
     <!-- -----------------------------------------------------------------
-         WEATHER HUB WITH TWO CATS (ORANGE JUMPER & WHITE LEDGE WINKER)
+         WEATHER HUB: CAT WALKS FROM RIGHT (GUN) TO LEFT (BHANU)
     ----------------------------------------------------------------- -->
     <div class="weather-wrapper" id="weather-wrapper-ref">
       
-      <!-- Canvas for Physics Cat Animation -->
+      <!-- Canvas for Dual Physics Cats -->
       <canvas id="cat-physics-canvas"></canvas>
 
       <!-- Two Location Weather Hub -->
@@ -1099,8 +1094,6 @@
 
     <!-- Micro Highlights Cards -->
     <section class="moments-grid">
-      
-      <!-- Heartbeat Card -->
       <div class="moment-card" id="heartbeat-card">
         <div class="moment-card-icon">
           <svg viewBox="0 0 24 24" width="26" height="26" fill="#f48fb1" style="filter: drop-shadow(0 0 8px #f48fb1);">
@@ -1112,7 +1105,6 @@
         <div class="moment-desc">Ticking together until November 3rd... and infinite more will continue forever after our meeting 🤍</div>
       </div>
 
-      <!-- Distance Card -->
       <div class="moment-card">
         <div class="moment-card-icon">
           <svg viewBox="0 0 24 24" width="26" height="26" fill="#ffca28">
@@ -1124,7 +1116,6 @@
         <div class="moment-desc">Todaraisingh to Vanasthali Niwai — just a gentle ride away under the exact same sky.</div>
       </div>
 
-      <!-- Peaceful Nights Card -->
       <div class="moment-card">
         <div class="moment-card-icon">
           <svg viewBox="0 0 24 24" width="26" height="26" fill="#b39ddb">
@@ -1135,7 +1126,6 @@
         <div class="moment-value" id="nights-remaining">30 Nights</div>
         <div class="moment-desc">Sleep warmly knowing that each morning brings us one step closer to November 3rd.</div>
       </div>
-
     </section>
 
     <!-- Spotify Music Section -->
@@ -1150,8 +1140,6 @@
       </div>
 
       <div class="spotify-grid">
-        
-        <!-- Music For Gun -->
         <div class="spotify-card">
           <div class="spotify-card-header">
             <div>
@@ -1170,7 +1158,6 @@
           </div>
         </div>
 
-        <!-- Music For Bhanu -->
         <div class="spotify-card">
           <div class="spotify-card-header">
             <div>
@@ -1188,7 +1175,6 @@
             <iframe id="spotify-frame-bhanu" style="border-radius:12px" src="" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
           </div>
         </div>
-
       </div>
     </section>
 
@@ -1197,8 +1183,6 @@
   <script>
     /* =====================================================================
        🎵 SPOTIFY SONGS CONFIGURATION:
-       Bas yahan links daal dein aur GitHub par commit kar dein. 
-       Ye hamesha ke liye permanent save rahega!
     ===================================================================== */
     const SONG_FOR_GUN   = "https://open.spotify.com/track/1BxfuPKGuaTgP7aM0XbdCe"; 
     const SONG_FOR_BHANU = "https://open.spotify.com/track/6qzX4aJ7eL7vJ5a8yqYVvA"; 
@@ -1214,24 +1198,25 @@
 
     let activeWeatherMeta = {
       isRaining: false,
-      isCloudy: false
+      isCloudy: false,
+      isDaytime: true
     };
 
     /* ----------------------------------------------------
-       1. REAL PHYSICS-ENGINE ANIMATED DUAL CATS ON CANVAS
+       1. REAL PHYSICS-ENGINE: CAT WALKS RIGHT TO LEFT!
     ---------------------------------------------------- */
     const catCanvas = document.getElementById('cat-physics-canvas');
     const catCtx = catCanvas.getContext('2d');
     let catWidth, catHeight;
 
-    // Orange Cat state
+    // Orange Cat: Starts on Gun's card (RIGHT), walks LEFT towards Bhanu
     let catState = {
-      phase: 'SLEEP',       // SLEEP (5s) -> STRETCH_FRONT -> STRETCH_ARCH -> WALK_BHANU -> JUMP_GAP -> LAND_GUN -> WALK_GUN -> JUMP_EXIT -> DONE
+      phase: 'SLEEP',       // SLEEP (5s on Gun) -> STRETCH_FRONT -> STRETCH_ARCH -> WALK_GUN_LEFT -> JUMP_GAP_LEFT -> LAND_BHANU -> WALK_BHANU_LEFT -> COLLIDE_BUMP -> JUMP_EXIT_LEFT -> DONE
       time: 0,
-      x: 60,                // Positioned comfortably to the left
+      x: 0,
       y: 55,
       baseY: 55,
-      scaleX: 1,
+      scaleX: 1,            // Facing Left naturally
       scaleY: 1,
       rotation: 0,
       walkCycle: 0,
@@ -1239,18 +1224,18 @@
       jumpTargetX: 0,
       jumpT: 0,
       jumpDuration: 1.15,
-      opacity: 1
+      opacity: 1,
+      initialized: false
     };
 
-    // White Cat State (Matching provided Image Reference)
+    // White Cat: Resting on Bhanu's card (LEFT)
     let whiteCatState = {
-      phase: 'SLEEP',       // SLEEP -> STARTLED -> SLIP_DOWN -> HANG_WINK_WAVE
+      phase: 'SLEEP',       // SLEEP -> SLIP_DOWN -> HANG_WINK_WAVE
       time: 0,
-      x: 18,
+      x: 0,
       y: 55,
-      hangY: 72,            // Ledge hanging position
-      waveAngle: 0,
-      winkTimer: 0
+      hangY: 72,
+      waveAngle: 0
     };
 
     function resizeCatCanvas() {
@@ -1258,6 +1243,13 @@
       if (!ref) return;
       catWidth = catCanvas.width = ref.offsetWidth;
       catHeight = catCanvas.height = 135;
+
+      const pos = getCardPositions();
+      if (!catState.initialized) {
+        catState.x = pos.gRight - 28; // Start at Gun's right side!
+        whiteCatState.x = pos.bLeft + 35; // White cat on Bhanu's left side!
+        catState.initialized = true;
+      }
     }
     window.addEventListener('resize', resizeCatCanvas);
 
@@ -1265,13 +1257,14 @@
       const cardB = document.getElementById('card-bhanu');
       const cardG = document.getElementById('card-gun');
       const ref = document.getElementById('weather-wrapper-ref');
-      if (!cardB || !cardG || !ref) return { bRight: 200, gLeft: 300, gRight: 500 };
+      if (!cardB || !cardG || !ref) return { bLeft: 20, bRight: 200, gLeft: 300, gRight: 500 };
 
       const refRect = ref.getBoundingClientRect();
       const bRect = cardB.getBoundingClientRect();
       const gRect = cardG.getBoundingClientRect();
 
       return {
+        bLeft: (bRect.left - refRect.left),
         bRight: (bRect.right - refRect.left) - 25,
         gLeft: (gRect.left - refRect.left) + 20,
         gRight: (gRect.right - refRect.left) - 25
@@ -1284,36 +1277,28 @@
 
       const pos = getCardPositions();
 
-      // White Cat state machine
-      if (whiteCatState.phase === 'SLEEP') {
-        // Orange cat wakes up and bumps into white cat around 6.5s
-        if (catState.phase === 'WALK_BHANU') {
-          whiteCatState.phase = 'SLIP_DOWN';
-          whiteCatState.time = 0;
-        }
-      } else if (whiteCatState.phase === 'SLIP_DOWN') {
-        // Slips down gracefully and catches the ledge!
+      // White Cat State Machine
+      if (whiteCatState.phase === 'SLIP_DOWN') {
         whiteCatState.y += (whiteCatState.hangY - whiteCatState.y) * (dt * 9);
         if (Math.abs(whiteCatState.y - whiteCatState.hangY) < 1) {
           whiteCatState.y = whiteCatState.hangY;
           whiteCatState.phase = 'HANG_WINK_WAVE';
         }
       } else if (whiteCatState.phase === 'HANG_WINK_WAVE') {
-        // Cute playful waving paw cycle
         whiteCatState.waveAngle = Math.sin(whiteCatState.time * 5.5) * 0.35;
       }
 
-      // Orange Cat state machine
-      // State 1: Sleep peacefully (Extended to ~4.8s - 5s)
+      // Orange Cat State Machine (WALKING RIGHT TO LEFT)
+      // 1. Sleep peacefully on Gun's Card for ~5.0 seconds
       if (catState.phase === 'SLEEP') {
         catState.scaleY = 0.85 + Math.sin(catState.time * 2.8) * 0.05;
         catState.scaleX = 1.05;
-        if (catState.time > 4.8) {
+        if (catState.time > 5.0) {
           catState.phase = 'STRETCH_FRONT';
           catState.time = 0;
         }
       }
-      // State 2: Front Angadaai (Paws stretched forward)
+      // 2. Front Angadaai
       else if (catState.phase === 'STRETCH_FRONT') {
         catState.scaleY = 0.72;
         catState.scaleX = 1.25;
@@ -1323,14 +1308,14 @@
           catState.time = 0;
         }
       }
-      // State 3: High Rainbow Arch Angadaai
+      // 3. High Rainbow Arch Angadaai
       else if (catState.phase === 'STRETCH_ARCH') {
         catState.scaleY = 1.35;
         catState.scaleX = 0.85;
         catState.rotation = 0.15;
         catState.y = catState.baseY - 7;
         if (catState.time > 1.5) {
-          catState.phase = 'WALK_BHANU';
+          catState.phase = 'WALK_GUN_LEFT';
           catState.time = 0;
           catState.scaleX = 1;
           catState.scaleY = 1;
@@ -1338,31 +1323,31 @@
           catState.y = catState.baseY;
         }
       }
-      // State 4: Walking across Bhanu's card
-      else if (catState.phase === 'WALK_BHANU') {
-        catState.x += 66 * dt;
+      // 4. Walking Left across Gun's card
+      else if (catState.phase === 'WALK_GUN_LEFT') {
+        catState.x -= 68 * dt; // Moving Left!
         catState.walkCycle += dt * 9;
         catState.y = catState.baseY + Math.abs(Math.sin(catState.walkCycle)) * -4;
 
-        if (catState.x >= pos.bRight - 15) {
+        if (catState.x <= pos.gLeft + 15) {
           catState.phase = 'PRE_JUMP_GAP';
           catState.time = 0;
         }
       }
-      // State 5: Crouch before leaping the gap (Squash)
+      // 5. Crouch before Leap (Squash)
       else if (catState.phase === 'PRE_JUMP_GAP') {
         catState.scaleY = 0.65;
         catState.scaleX = 1.2;
         catState.y = catState.baseY + 4;
         if (catState.time > 0.28) {
-          catState.phase = 'JUMP_GAP';
+          catState.phase = 'JUMP_GAP_LEFT';
           catState.jumpStartX = catState.x;
-          catState.jumpTargetX = pos.gLeft + 15;
+          catState.jumpTargetX = pos.bRight - 15; // Leap across to Bhanu's card!
           catState.jumpT = 0;
         }
       }
-      // State 6: Parabolic Leap across the Gap
-      else if (catState.phase === 'JUMP_GAP') {
+      // 6. Parabolic Leap Left across the Gap
+      else if (catState.phase === 'JUMP_GAP_LEFT') {
         catState.jumpT += dt / catState.jumpDuration;
         const t = Math.min(1, catState.jumpT);
         catState.x = catState.jumpStartX + (catState.jumpTargetX - catState.jumpStartX) * t;
@@ -1371,58 +1356,65 @@
         const arcY = 4 * jumpApexHeight * t * (1 - t);
         catState.y = catState.baseY - arcY;
 
-        catState.rotation = (t - 0.5) * 0.75;
+        catState.rotation = -(t - 0.5) * 0.75;
         catState.scaleX = 1.2;
         catState.scaleY = 0.85;
 
         if (t >= 1) {
-          catState.phase = 'LAND_GUN';
+          catState.phase = 'LAND_BHANU';
           catState.time = 0;
         }
       }
-      // State 7: Landing on Gun's Card
-      else if (catState.phase === 'LAND_GUN') {
+      // 7. Landing on Bhanu's Card
+      else if (catState.phase === 'LAND_BHANU') {
         catState.y = catState.baseY;
         catState.rotation = 0;
         catState.scaleY = 0.7;
         catState.scaleX = 1.25;
         if (catState.time > 0.22) {
-          catState.phase = 'WALK_GUN';
+          catState.phase = 'WALK_BHANU_LEFT';
           catState.scaleX = 1;
           catState.scaleY = 1;
         }
       }
-      // State 8: Strolling across Gun's card
-      else if (catState.phase === 'WALK_GUN') {
-        catState.x += 68 * dt;
+      // 8. Walking Left across Bhanu's Card towards White Cat
+      else if (catState.phase === 'WALK_BHANU_LEFT') {
+        catState.x -= 70 * dt; // Moving Left!
         catState.walkCycle += dt * 9;
         catState.y = catState.baseY + Math.abs(Math.sin(catState.walkCycle)) * -4;
 
-        if (catState.x >= pos.gRight - 20) {
+        // Orange Cat bumps into White Cat!
+        if (catState.x <= whiteCatState.x + 36 && whiteCatState.phase === 'SLEEP') {
+          whiteCatState.phase = 'SLIP_DOWN';
+          whiteCatState.time = 0;
+        }
+
+        // When orange cat reaches edge of Bhanu's card
+        if (catState.x <= pos.bLeft + 8) {
           catState.phase = 'PRE_JUMP_EXIT';
           catState.time = 0;
         }
       }
-      // State 9: Crouch before exit
+      // 9. Crouch before Exit Jump
       else if (catState.phase === 'PRE_JUMP_EXIT') {
         catState.scaleY = 0.65;
         catState.scaleX = 1.2;
         catState.y = catState.baseY + 4;
         if (catState.time > 0.22) {
-          catState.phase = 'JUMP_EXIT';
+          catState.phase = 'JUMP_EXIT_LEFT';
           catState.jumpStartX = catState.x;
-          catState.jumpTargetX = catWidth + 60;
+          catState.jumpTargetX = -60; // Jump off-screen Left!
           catState.jumpT = 0;
         }
       }
-      // State 10: Playful exit
-      else if (catState.phase === 'JUMP_EXIT') {
+      // 10. Leap off-screen Left
+      else if (catState.phase === 'JUMP_EXIT_LEFT') {
         catState.jumpT += dt / 0.85;
         const t = catState.jumpT;
         catState.x = catState.jumpStartX + (catState.jumpTargetX - catState.jumpStartX) * t;
         const arcY = 4 * 42 * t * (1 - t);
         catState.y = catState.baseY - arcY;
-        catState.rotation = (t - 0.3) * 0.8;
+        catState.rotation = -(t - 0.3) * 0.8;
         catState.opacity = Math.max(0, 1 - (t * 1.1));
 
         if (t >= 1) {
@@ -1434,12 +1426,11 @@
     function renderPhysicsCats() {
       catCtx.clearRect(0, 0, catWidth, catHeight);
 
-      // --- 1. RENDER WHITE CAT (Exact match to provided image) ---
+      // --- 1. RENDER WHITE CAT (ON BHANU'S CARD) ---
       catCtx.save();
       catCtx.translate(whiteCatState.x, whiteCatState.y);
 
       if (whiteCatState.phase === 'SLEEP') {
-        // Sleeping white kitten curled up
         catCtx.fillStyle = '#ffffff';
         catCtx.beginPath();
         catCtx.ellipse(0, 0, 14, 10, 0, 0, Math.PI * 2);
@@ -1447,14 +1438,12 @@
         catCtx.strokeStyle = '#27272a';
         catCtx.lineWidth = 1.6;
         catCtx.stroke();
-        // Soft pink ears
         catCtx.fillStyle = '#f472b6';
         catCtx.beginPath();
         catCtx.arc(-8, -8, 3, 0, Math.PI * 2);
         catCtx.fill();
       } else {
-        // HANGING FROM LEDGE, WINKING & WAVING HAND (MATCHES IMAGE 100%)
-        // Horizontal Ledge bar behind/in front of paws
+        // HANGING FROM LEDGE: WINK & WAVE "HII"
         catCtx.strokeStyle = '#18181b';
         catCtx.lineWidth = 3;
         catCtx.beginPath();
@@ -1471,51 +1460,31 @@
         catCtx.fill();
         catCtx.stroke();
 
-        // Big Cute Ears with Pink Inside
-        // Left Ear
+        // Ears with pink inside
         catCtx.fillStyle = '#ffffff';
         catCtx.beginPath();
-        catCtx.moveTo(-20, -18);
-        catCtx.lineTo(-24, -36);
-        catCtx.lineTo(-8, -26);
-        catCtx.closePath();
-        catCtx.fill();
-        catCtx.stroke();
-
+        catCtx.moveTo(-20, -18); catCtx.lineTo(-24, -36); catCtx.lineTo(-8, -26); catCtx.closePath();
+        catCtx.fill(); catCtx.stroke();
         catCtx.fillStyle = '#fda4af';
         catCtx.beginPath();
-        catCtx.moveTo(-18, -20);
-        catCtx.lineTo(-21, -32);
-        catCtx.lineTo(-10, -25);
-        catCtx.closePath();
+        catCtx.moveTo(-18, -20); catCtx.lineTo(-21, -32); catCtx.lineTo(-10, -25); catCtx.closePath();
         catCtx.fill();
 
-        // Right Ear
         catCtx.fillStyle = '#ffffff';
         catCtx.beginPath();
-        catCtx.moveTo(8, -26);
-        catCtx.lineTo(24, -36);
-        catCtx.lineTo(20, -18);
-        catCtx.closePath();
-        catCtx.fill();
-        catCtx.stroke();
-
+        catCtx.moveTo(8, -26); catCtx.lineTo(24, -36); catCtx.lineTo(20, -18); catCtx.closePath();
+        catCtx.fill(); catCtx.stroke();
         catCtx.fillStyle = '#fda4af';
         catCtx.beginPath();
-        catCtx.moveTo(10, -25);
-        catCtx.lineTo(21, -32);
-        catCtx.lineTo(18, -20);
-        catCtx.closePath();
+        catCtx.moveTo(10, -25); catCtx.lineTo(21, -32); catCtx.lineTo(18, -20); catCtx.closePath();
         catCtx.fill();
 
-        // Cat Whiskers (3 on each side)
+        // Whiskers
         catCtx.strokeStyle = '#18181b';
         catCtx.lineWidth = 1.8;
-        // Left whiskers
         catCtx.beginPath(); catCtx.moveTo(-18, -5); catCtx.lineTo(-30, -7); catCtx.stroke();
         catCtx.beginPath(); catCtx.moveTo(-19, -2); catCtx.lineTo(-32, -1); catCtx.stroke();
         catCtx.beginPath(); catCtx.moveTo(-18, 1); catCtx.lineTo(-29, 5); catCtx.stroke();
-        // Right whiskers
         catCtx.beginPath(); catCtx.moveTo(18, -5); catCtx.lineTo(30, -7); catCtx.stroke();
         catCtx.beginPath(); catCtx.moveTo(19, -2); catCtx.lineTo(32, -1); catCtx.stroke();
         catCtx.beginPath(); catCtx.moveTo(18, 1); catCtx.lineTo(30, 5); catCtx.stroke();
@@ -1533,20 +1502,18 @@
         catCtx.beginPath();
         catCtx.arc(11, -8, 5.5, 0, Math.PI * 2);
         catCtx.fill();
-        // Eye Sparkle
         catCtx.fillStyle = '#ffffff';
         catCtx.beginPath();
         catCtx.arc(9.5, -9.5, 2.2, 0, Math.PI * 2);
         catCtx.arc(12.5, -6.5, 1.1, 0, Math.PI * 2);
         catCtx.fill();
 
-        // Cute Pink Nose
+        // Pink Nose & Mouth
         catCtx.fillStyle = '#fb7185';
         catCtx.beginPath();
         catCtx.ellipse(0, -1, 2.6, 2, 0, 0, Math.PI * 2);
         catCtx.fill();
 
-        // Mouth (ω)
         catCtx.strokeStyle = '#18181b';
         catCtx.lineWidth = 1.8;
         catCtx.beginPath();
@@ -1554,7 +1521,7 @@
         catCtx.arc(2.5, 3, 2.5, Math.PI * 1.1, Math.PI * 0.1, true);
         catCtx.stroke();
 
-        // Left Paw holding tight to the Ledge
+        // Left Paw holding Ledge
         catCtx.fillStyle = '#ffffff';
         catCtx.strokeStyle = '#18181b';
         catCtx.lineWidth = 2.2;
@@ -1563,12 +1530,11 @@
         catCtx.fill();
         catCtx.stroke();
 
-        // Right Paw WAVING "HII!" WITH PINK TOE BEANS!
+        // Right Paw WAVING "HII!" WITH PINK BEANS
         catCtx.save();
         catCtx.translate(22, -2);
         catCtx.rotate(whiteCatState.waveAngle);
 
-        // Raised Paw base
         catCtx.fillStyle = '#ffffff';
         catCtx.strokeStyle = '#18181b';
         catCtx.lineWidth = 2.2;
@@ -1577,13 +1543,11 @@
         catCtx.fill();
         catCtx.stroke();
 
-        // Pink Main Pad (Big center bean)
         catCtx.fillStyle = '#fb7185';
         catCtx.beginPath();
         catCtx.ellipse(0, 1.5, 4.2, 3.2, 0, 0, Math.PI * 2);
         catCtx.fill();
 
-        // 4 Cute Pink Toe Pads
         catCtx.beginPath();
         catCtx.arc(-5, -4.5, 1.8, 0, Math.PI * 2);
         catCtx.arc(-1.6, -6.5, 1.8, 0, Math.PI * 2);
@@ -1595,7 +1559,7 @@
       }
       catCtx.restore();
 
-      // --- 2. RENDER ORANGE TABBY CAT ---
+      // --- 2. RENDER ORANGE TABBY CAT (WALKING LEFT) ---
       if (catState.phase !== 'DONE' && catState.opacity > 0) {
         catCtx.save();
         catCtx.globalAlpha = catState.opacity;
@@ -1603,7 +1567,7 @@
         catCtx.rotate(catState.rotation);
         catCtx.scale(catState.scaleX, catState.scaleY);
 
-        // Tail Wag
+        // Tail Wag (Tail to the right, head to the left)
         const tailAngle = Math.sin(catState.walkCycle + catState.time * 4) * 0.3;
         catCtx.save();
         catCtx.translate(14, -6);
@@ -1637,7 +1601,7 @@
         catCtx.ellipse(0, 2, 11, 7, 0, 0, Math.PI * 2);
         catCtx.fill();
 
-        // Head
+        // Head (Facing Left!)
         catCtx.fillStyle = '#fb923c';
         catCtx.beginPath();
         catCtx.arc(-13, -7, 10.5, 0, Math.PI * 2);
@@ -1649,7 +1613,6 @@
         catCtx.moveTo(-20, -13); catCtx.lineTo(-17, -24); catCtx.lineTo(-11, -16); catCtx.fill();
         catCtx.moveTo(-13, -16); catCtx.lineTo(-7, -24); catCtx.lineTo(-4, -13); catCtx.fill();
 
-        // Inner Pink
         catCtx.fillStyle = '#f472b6';
         catCtx.beginPath();
         catCtx.moveTo(-18, -14); catCtx.lineTo(-16, -21); catCtx.lineTo(-12, -16); catCtx.fill();
@@ -1702,45 +1665,40 @@
     }
 
     /* ----------------------------------------------------
-       2. IN-BUILT TEDDY BEAR HUG CANVAS ENGINE (NEVER BLANK)
+       2. IN-BUILT CANVAS TEDDY BEAR HUG (NEVER BLANK)
     ---------------------------------------------------- */
     const teddyCanvas = document.getElementById('modal-teddy-canvas');
     const teddyCtx = teddyCanvas.getContext('2d');
     let teddyTime = 0;
 
-    function renderTeddyHug(now) {
+    function renderTeddyHug() {
       teddyTime += 0.025;
       teddyCtx.clearRect(0, 0, 260, 160);
 
-      // Hug Breathing and Squeezing squish
       const breathe = Math.sin(teddyTime * 3) * 0.04;
       const hugBounce = Math.abs(Math.sin(teddyTime * 2.5)) * 4;
 
       teddyCtx.save();
       teddyCtx.translate(130, 85 + hugBounce);
 
-      // --- Left Teddy (Bhanu - Milk/Brown Bear) ---
+      // Left Teddy (Bhanu - Golden Bear)
       teddyCtx.save();
       teddyCtx.translate(-16, 0);
       teddyCtx.scale(1 + breathe, 1 - breathe);
 
-      // Left Ear
       teddyCtx.fillStyle = '#a16207';
       teddyCtx.beginPath(); teddyCtx.arc(-26, -34, 11, 0, Math.PI * 2); teddyCtx.fill();
       teddyCtx.fillStyle = '#fde047';
       teddyCtx.beginPath(); teddyCtx.arc(-26, -34, 6, 0, Math.PI * 2); teddyCtx.fill();
 
-      // Right Ear
       teddyCtx.fillStyle = '#a16207';
       teddyCtx.beginPath(); teddyCtx.arc(12, -38, 11, 0, Math.PI * 2); teddyCtx.fill();
       teddyCtx.fillStyle = '#fde047';
       teddyCtx.beginPath(); teddyCtx.arc(12, -38, 6, 0, Math.PI * 2); teddyCtx.fill();
 
-      // Body & Head
       teddyCtx.fillStyle = '#ca8a04';
       teddyCtx.beginPath(); teddyCtx.ellipse(-6, -6, 26, 28, 0, 0, Math.PI * 2); teddyCtx.fill();
 
-      // Happy Eyes (^ ^)
       teddyCtx.strokeStyle = '#451a03';
       teddyCtx.lineWidth = 2.4;
       teddyCtx.lineCap = 'round';
@@ -1749,26 +1707,22 @@
       teddyCtx.arc(-4, -14, 4, Math.PI * 1.1, Math.PI * 1.9);
       teddyCtx.stroke();
 
-      // Blush
       teddyCtx.fillStyle = '#f472b6';
       teddyCtx.globalAlpha = 0.7;
       teddyCtx.beginPath(); teddyCtx.ellipse(-20, -6, 5, 3, 0, 0, Math.PI * 2); teddyCtx.fill();
       teddyCtx.globalAlpha = 1.0;
 
-      // Hugging Arm wrapping tightly around Mocha Bear
       teddyCtx.fillStyle = '#a16207';
       teddyCtx.beginPath();
       teddyCtx.ellipse(14, 2, 16, 7.5, Math.PI * 0.15, 0, Math.PI * 2);
       teddyCtx.fill();
-
       teddyCtx.restore();
 
-      // --- Right Teddy (Gun - Mocha/White Fluffy Bear) ---
+      // Right Teddy (Gun - Fluffy Lavender Bear)
       teddyCtx.save();
       teddyCtx.translate(16, 0);
       teddyCtx.scale(1 - breathe, 1 + breathe);
 
-      // Right Ear with Lavender Ribbon Bow
       teddyCtx.fillStyle = '#f5f5f4';
       teddyCtx.strokeStyle = '#d6d3d1';
       teddyCtx.lineWidth = 1.5;
@@ -1776,7 +1730,7 @@
       teddyCtx.fillStyle = '#fbcfe8';
       teddyCtx.beginPath(); teddyCtx.arc(26, -34, 6, 0, Math.PI * 2); teddyCtx.fill();
 
-      // Cute Lavender Bow
+      // Lavender Bow
       teddyCtx.fillStyle = '#b39ddb';
       teddyCtx.beginPath();
       teddyCtx.ellipse(16, -42, 6, 4, Math.PI * 0.3, 0, Math.PI * 2);
@@ -1785,16 +1739,13 @@
       teddyCtx.fillStyle = '#ffca28';
       teddyCtx.beginPath(); teddyCtx.arc(21, -42, 2.5, 0, Math.PI * 2); teddyCtx.fill();
 
-      // Left Ear
       teddyCtx.fillStyle = '#f5f5f4';
       teddyCtx.beginPath(); teddyCtx.arc(-12, -38, 11, 0, Math.PI * 2); teddyCtx.fill(); teddyCtx.stroke();
 
-      // Body & Head
       teddyCtx.fillStyle = '#ffffff';
       teddyCtx.beginPath(); teddyCtx.ellipse(6, -6, 26, 28, 0, 0, Math.PI * 2); teddyCtx.fill();
       teddyCtx.stroke();
 
-      // Happy Eyes (^ ^)
       teddyCtx.strokeStyle = '#292524';
       teddyCtx.lineWidth = 2.4;
       teddyCtx.lineCap = 'round';
@@ -1803,18 +1754,15 @@
       teddyCtx.arc(16, -12, 4, Math.PI * 1.1, Math.PI * 1.9);
       teddyCtx.stroke();
 
-      // Blush
       teddyCtx.fillStyle = '#f472b6';
       teddyCtx.globalAlpha = 0.75;
       teddyCtx.beginPath(); teddyCtx.ellipse(20, -6, 5, 3, 0, 0, Math.PI * 2); teddyCtx.fill();
       teddyCtx.globalAlpha = 1.0;
 
-      // Hugging Arm wrapping back
       teddyCtx.fillStyle = '#e7e5e4';
       teddyCtx.beginPath();
       teddyCtx.ellipse(-14, 2, 16, 7.5, -Math.PI * 0.15, 0, Math.PI * 2);
       teddyCtx.fill();
-
       teddyCtx.restore();
 
       teddyCtx.restore();
@@ -1888,7 +1836,7 @@
       let greetingTitle = "Warm Wishes, Gun & Bhanu";
       let treatText = "A warm cutting chai & coffee together ☕✨";
 
-      if (hour >= 4 && hour < 12) {
+      if (hour >= 5 && hour < 12) {
         badgeText = "Good Morning ☀️";
         greetingTitle = "Good Morning, Gun & Bhanu";
         treatText = "Morning freshness with hot Chai & frothy Coffee ☕🥐";
@@ -1896,7 +1844,7 @@
         badgeText = "Good Afternoon 🌤️";
         greetingTitle = "Good Afternoon, Gun & Bhanu";
         treatText = "Lunch treats & sweet midday sips together 🥪✨☕";
-      } else if (hour >= 16 && hour < 20) {
+      } else if (hour >= 16 && hour < 19) {
         badgeText = "Good Evening 🌅";
         greetingTitle = "Good Evening, Gun & Bhanu";
         treatText = "Evening golden hour with warm tea & coffee ☕✨";
@@ -2067,7 +2015,7 @@
     }
 
     /* ----------------------------------------------------
-       7. Live Weather Sync (With Active Rain & Clouds)
+       7. Live Weather Sync (Real-time Day, Rain, Clouds)
     ---------------------------------------------------- */
     const WMO_MAP = {
       0: { text: "Clear Sky", iconDay: "☀️", iconNight: "🌙" },
@@ -2095,10 +2043,23 @@
         const avgWind = ((dataB.current?.wind_speed_10m || 8) + (dataG.current?.wind_speed_10m || 8)) / 2;
         adjustFlowerWind(avgWind);
 
-        // Check if rain or cloud applies across either location
+        // Open-Meteo is_day detection
+        const isDayFlag = (dataB.current?.is_day === 1 || dataG.current?.is_day === 1);
+        activeWeatherMeta.isDaytime = isDayFlag;
+
+        // Rain and Cloud status
         const codes = [dataB.current?.weather_code || 0, dataG.current?.weather_code || 0];
         activeWeatherMeta.isRaining = codes.some(c => [51, 53, 55, 61, 63, 65, 80, 81, 82].includes(c));
         activeWeatherMeta.isCloudy = codes.some(c => [1, 2, 3, 45].includes(c));
+
+        const statusEl = document.getElementById('sky-sync-status');
+        if (activeWeatherMeta.isRaining) {
+          statusEl.textContent = "🌧️ RAINY SKY SYNCED • LIVE WEATHER";
+        } else if (activeWeatherMeta.isDaytime) {
+          statusEl.textContent = "☀️ DAYLIGHT MODE SYNCED • HIGH PRECISION";
+        } else {
+          statusEl.textContent = "🌙 NIGHT TWILIGHT SYNCED • HIGH PRECISION";
+        }
 
       } catch (err) {
         console.log("Weather sync note", err);
@@ -2109,7 +2070,7 @@
       if (!current) return;
       const isDay = current.is_day === 1;
       const code = current.weather_code || 0;
-      const wmo = WMO_MAP[code] || { text: "Clear Pleasant Sky", iconDay: "☀️", iconNight: "🌙" };
+      const wmo = WMO_MAP[code] || { text: "Clear Sky", iconDay: "☀️", iconNight: "🌙" };
 
       document.getElementById(`${person}-temp`).textContent = `${Math.round(current.temperature_2m)}°C`;
       document.getElementById(`${person}-feels`).textContent = `Feels like ${Math.round(current.apparent_temperature)}°C`;
@@ -2144,7 +2105,7 @@
     }
 
     /* ----------------------------------------------------
-       8. Atmospheric Sky Canvas with Active Rain, Clouds & Fireflies
+       8. VIBRANT ATMOSPHERIC CANVAS (DAYLIGHT, SUN, RAIN)
     ---------------------------------------------------- */
     const skyCanvas = document.getElementById('atmosphere-canvas');
     const skyCtx = skyCanvas.getContext('2d');
@@ -2161,7 +2122,6 @@
     window.addEventListener('resize', resizeSkyCanvas);
 
     function initAtmosphereParticles() {
-      // 1. Fireflies / Dust
       fireflies = [];
       const fCount = Math.min(50, Math.floor(skyWidth / 24));
       for (let i = 0; i < fCount; i++) {
@@ -2176,23 +2136,20 @@
         });
       }
 
-      // 2. Raindrops
       raindrops = [];
-      for (let i = 0; i < 75; i++) {
+      for (let i = 0; i < 90; i++) {
         raindrops.push({
           x: Math.random() * skyWidth,
           y: Math.random() * skyHeight,
           length: Math.random() * 18 + 12,
-          speed: Math.random() * 12 + 18,
-          alpha: Math.random() * 0.5 + 0.3
+          speed: Math.random() * 14 + 18
         });
       }
 
-      // 3. Volumetric Clouds
       clouds = [
-        { x: skyWidth * 0.1, y: 70, scale: 1.1, speed: 0.15 },
-        { x: skyWidth * 0.55, y: 110, scale: 1.3, speed: 0.22 },
-        { x: skyWidth * 0.85, y: 50, scale: 0.95, speed: 0.18 }
+        { x: skyWidth * 0.08, y: 75, scale: 1.15, speed: 0.16 },
+        { x: skyWidth * 0.52, y: 110, scale: 1.35, speed: 0.22 },
+        { x: skyWidth * 0.85, y: 55, scale: 0.95, speed: 0.18 }
       ];
     }
 
@@ -2200,12 +2157,12 @@
       ctx.save();
       ctx.translate(x, y);
       ctx.scale(scale, scale);
-      ctx.fillStyle = 'rgba(216, 180, 254, 0.16)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
       ctx.beginPath();
-      ctx.arc(0, 0, 36, 0, Math.PI * 2);
-      ctx.arc(28, -12, 28, 0, Math.PI * 2);
-      ctx.arc(55, 4, 32, 0, Math.PI * 2);
-      ctx.arc(26, 12, 26, 0, Math.PI * 2);
+      ctx.arc(0, 0, 38, 0, Math.PI * 2);
+      ctx.arc(30, -14, 30, 0, Math.PI * 2);
+      ctx.arc(60, 4, 34, 0, Math.PI * 2);
+      ctx.arc(30, 14, 28, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     }
@@ -2213,37 +2170,61 @@
     function drawAtmosphere() {
       skyCtx.clearRect(0, 0, skyWidth, skyHeight);
       const hour = new Date().getHours();
-      const isNight = hour < 6 || hour >= 19;
 
       let grad = skyCtx.createLinearGradient(0, 0, skyWidth, skyHeight);
+
+      // LIVE WEATHER ATMOSPHERIC PALETTES
       if (activeWeatherMeta.isRaining) {
-        // Deep misty rain indigo palette
-        grad.addColorStop(0, '#090812');
-        grad.addColorStop(0.5, '#151528');
-        grad.addColorStop(1, '#201d36');
+        // Rainy Overcast Sky
+        grad.addColorStop(0, '#111827');
+        grad.addColorStop(0.5, '#1e293b');
+        grad.addColorStop(1, '#334155');
       } else if (hour >= 5 && hour < 8) {
-        grad.addColorStop(0, '#1c1328');
-        grad.addColorStop(0.5, '#3b1c3c');
-        grad.addColorStop(1, '#ff8a65'); // Sunrise
+        // Sunrise / Golden Dawn
+        grad.addColorStop(0, '#2e1065');
+        grad.addColorStop(0.4, '#7c2d12');
+        grad.addColorStop(0.75, '#ea580c');
+        grad.addColorStop(1, '#fed7aa');
       } else if (hour >= 8 && hour < 17) {
-        grad.addColorStop(0, '#120f24');
-        grad.addColorStop(0.5, '#1e163b');
-        grad.addColorStop(1, '#2c2250'); // Day
+        // REAL VIBRANT DAYLIGHT SKY (No more dark night!)
+        grad.addColorStop(0, '#2563eb');
+        grad.addColorStop(0.35, '#4f46e5');
+        grad.addColorStop(0.7, '#7c3aed');
+        grad.addColorStop(1, '#c084fc');
       } else if (hour >= 17 && hour < 19) {
-        grad.addColorStop(0, '#191124');
-        grad.addColorStop(0.5, '#4a2545');
-        grad.addColorStop(1, '#ba68c8'); // Sunset Lavender
+        // Sunset / Golden Hour Twilight
+        grad.addColorStop(0, '#1e1b4b');
+        grad.addColorStop(0.4, '#701a75');
+        grad.addColorStop(0.75, '#ea580c');
+        grad.addColorStop(1, '#fbbf24');
       } else {
-        grad.addColorStop(0, '#090812');
-        grad.addColorStop(0.5, '#120e24');
-        grad.addColorStop(1, '#181230'); // Night
+        // Midnight Starry Sky
+        grad.addColorStop(0, '#06040d');
+        grad.addColorStop(0.5, '#0f0b21');
+        grad.addColorStop(1, '#1b1338');
       }
 
       skyCtx.fillStyle = grad;
       skyCtx.fillRect(0, 0, skyWidth, skyHeight);
 
-      // --- Volumetric Clouds if Cloudy ---
-      if (activeWeatherMeta.isCloudy) {
+      // Draw Glowing Sun during Daytime (8 AM - 5 PM)
+      if (hour >= 8 && hour < 17 && !activeWeatherMeta.isRaining) {
+        skyCtx.save();
+        const sunX = skyWidth * 0.82;
+        const sunY = 95;
+        const sunGlow = skyCtx.createRadialGradient(sunX, sunY, 15, sunX, sunY, 110);
+        sunGlow.addColorStop(0, 'rgba(255, 240, 160, 0.95)');
+        sunGlow.addColorStop(0.3, 'rgba(255, 215, 0, 0.35)');
+        sunGlow.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        skyCtx.fillStyle = sunGlow;
+        skyCtx.beginPath();
+        skyCtx.arc(sunX, sunY, 110, 0, Math.PI * 2);
+        skyCtx.fill();
+        skyCtx.restore();
+      }
+
+      // Clouds (Always in daylight or if cloudy)
+      if (activeWeatherMeta.isCloudy || (hour >= 8 && hour < 17)) {
         clouds.forEach(c => {
           c.x += c.speed;
           if (c.x > skyWidth + 120) c.x = -120;
@@ -2251,18 +2232,18 @@
         });
       }
 
-      // --- Falling Rain if Raining ---
+      // Rain animation if raining
       if (activeWeatherMeta.isRaining) {
-        skyCtx.strokeStyle = 'rgba(196, 181, 253, 0.65)';
-        skyCtx.lineWidth = 1.4;
+        skyCtx.strokeStyle = 'rgba(216, 180, 254, 0.75)';
+        skyCtx.lineWidth = 1.6;
         raindrops.forEach(r => {
           skyCtx.beginPath();
           skyCtx.moveTo(r.x, r.y);
-          skyCtx.lineTo(r.x - 2, r.y + r.length);
+          skyCtx.lineTo(r.x - 2.5, r.y + r.length);
           skyCtx.stroke();
 
           r.y += r.speed;
-          r.x -= 0.8;
+          r.x -= 0.9;
           if (r.y > skyHeight) {
             r.y = -20;
             r.x = Math.random() * skyWidth;
@@ -2270,31 +2251,28 @@
         });
       }
 
-      // --- Fireflies / Dust Particles ---
-      fireflies.forEach(f => {
-        f.alpha += f.alphaDelta;
-        if (f.alpha > 1 || f.alpha < 0) f.alphaDelta = -f.alphaDelta;
+      // Fireflies at night
+      if ((hour < 6 || hour >= 19) && !activeWeatherMeta.isRaining) {
+        fireflies.forEach(f => {
+          f.alpha += f.alphaDelta;
+          if (f.alpha > 1 || f.alpha < 0) f.alphaDelta = -f.alphaDelta;
 
-        skyCtx.beginPath();
-        if (isNight && !activeWeatherMeta.isRaining) {
+          skyCtx.beginPath();
           skyCtx.fillStyle = `rgba(220, 255, 120, ${Math.max(0.1, f.alpha)})`;
           skyCtx.shadowColor = '#d4ff68';
           skyCtx.shadowBlur = 10;
-        } else {
-          skyCtx.fillStyle = `rgba(255, 255, 255, ${Math.max(0.1, f.alpha * 0.4)})`;
-          skyCtx.shadowBlur = 0;
-        }
-        skyCtx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
-        skyCtx.fill();
+          skyCtx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+          skyCtx.fill();
 
-        f.y += f.speedY;
-        f.x += f.speedX;
-        if (f.y < 0) f.y = skyHeight;
-        if (f.y > skyHeight) f.y = 0;
-        if (f.x < 0) f.x = skyWidth;
-        if (f.x > skyWidth) f.x = 0;
-      });
-      skyCtx.shadowBlur = 0;
+          f.y += f.speedY;
+          f.x += f.speedX;
+          if (f.y < 0) f.y = skyHeight;
+          if (f.y > skyHeight) f.y = 0;
+          if (f.x < 0) f.x = skyWidth;
+          if (f.x > skyWidth) f.x = 0;
+        });
+        skyCtx.shadowBlur = 0;
+      }
 
       requestAnimationFrame(drawAtmosphere);
     }
@@ -2371,7 +2349,7 @@
       updateCountdown();
       syncWeather();
 
-      // Start Dual Physics Cats
+      // Start Dual Physics Cats (Right to Left!)
       resizeCatCanvas();
       requestAnimationFrame(catLoop);
 
@@ -2382,6 +2360,7 @@
     window.addEventListener('resize', () => {
       generateGarden();
       resizeCatCanvas();
+      resizeSkyCanvas();
     });
   </script>
 </body>
