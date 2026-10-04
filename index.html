@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Bhanu & Gun • Counting Every Heartbeat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --lavender-glow: #b39ddb;
+      --lavender-soft: #d1c4e9;
+      --lavender-deep: #7e57c2;
+      --bg-dark-1: #0d0c18;
+      --card-bg: rgba(20, 16, 36, 0.72);
+      --card-border: rgba(179, 157, 219, 0.24);
+      --sunflower-petal: #ffca28;
+      --sway-speed: 3.5s;
+      --sway-angle: 4deg;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      background-color: var(--bg-dark-1);
+      color: #f3e8ff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Seamless Atmospheric Sky Canvas */
+    #atmosphere-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .ambient-mesh {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(circle at 15% 20%, rgba(126, 87, 194, 0.18), transparent 45%),
+                  radial-gradient(circle at 85% 25%, rgba(179, 157, 219, 0.14), transparent 50%),
+                  radial-gradient(circle at 50% 85%, rgba(255, 202, 40, 0.08), transparent 55%);
+      mix-blend-mode: screen;
+    }
+
+    /* Floating Background Hearts */
+    .floating-hearts-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .bg-heart {
+      position: absolute;
+      bottom: -40px;
+      opacity: 0;
+      animation: floatUp 12s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
+      15% { opacity: 0.5; }
+      80% { opacity: 0.35; }
+      100% { transform: translateY(-110vh) scale(1.1) rotate(25deg); opacity: 0; }
+    }
+
+    /* Daytime Airplane */
+    .airplane-fly {
+      position: fixed;
+      top: 14%;
+      left: -120px;
+      z-index: 2;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      animation: flyAcross 38s linear infinite;
+      opacity: 0.65;
+    }
+
+    .contrail {
+      width: 90px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4));
+      border-radius: 2px;
+      margin-right: -4px;
+    }
+
+    @keyframes flyAcross {
+      0% { transform: translateX(0) translateY(0); opacity: 0; }
+      5% { opacity: 0.7; }
+      90% { opacity: 0.7; }
+      100% { transform: translateX(calc(100vw + 240px)) translateY(35px); opacity: 0; }
+    }
+
+    /* Bottom Flower Garden (Wind-reactive) */
+    .garden-wrapper {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 95px;
+      z-index: 4;
+      pointer-events: none;
+      display: flex;
+      justify-content: space-around;
+      align-items: flex-end;
+      padding: 0 8px;
+      opacity: 0.9;
+      mask-image: linear-gradient(to top, rgba(0,0,0,1) 80%, transparent);
+      -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 80%, transparent);
+    }
+
+    .flower {
+      transform-origin: bottom center;
+      animation: dynamicFlowerSway var(--sway-speed) ease-in-out infinite alternate;
+    }
+    .flower:nth-child(even) { animation-delay: -0.8s; }
+    .flower:nth-child(3n) { animation-delay: -1.5s; }
+
+    @keyframes dynamicFlowerSway {
+      0% { transform: rotate(calc(-1 * var(--sway-angle))); }
+      100% { transform: rotate(var(--sway-angle)); }
+    }
+
+    /* Main Container */
+    .app-container {
+      position: relative;
+      z-index: 5;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 18px 120px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Top Nav Bar */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(14px);
+      border-radius: 100px;
+      padding: 10px 22px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--lavender-soft);
+      letter-spacing: 0.5px;
+    }
+
+    .nav-badge .pulse-dot {
+      width: 9px;
+      height: 9px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #4ade80;
+      animation: livePulse 2s infinite;
+    }
+
+    @keyframes livePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.6; }
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .action-btn {
+      background: rgba(179, 157, 219, 0.12);
+      border: 1px solid var(--card-border);
+      color: #ede9fe;
+      padding: 7px 14px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+    }
+
+    .action-btn:hover {
+      background: rgba(179, 157, 219, 0.28);
+      transform: translateY(-1px);
+    }
+
+    /* Countdown Hero */
+    .countdown-hero {
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(16px);
+      border-radius: 28px;
+      padding: 34px 20px;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .countdown-subheading {
+      display: inline-block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      font-weight: 700;
+      color: var(--lavender-glow);
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 600;
+      color: #ffffff;
+      text-shadow: 0 2px 14px rgba(179, 157, 219, 0.35);
+      margin-bottom: 6px;
+    }
+
+    .hero-caption {
+      font-size: 0.92rem;
+      color: #c4b5fd;
+      margin-bottom: 26px;
+    }
+
+    /* Digits Grid */
+    .digits-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .digits-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+      }
+    }
+
+    .digit-card {
+      background: rgba(13, 10, 24, 0.75);
+      border: 1px solid rgba(179, 157, 219, 0.2);
+      border-radius: 18px;
+      padding: 14px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .digit-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--lavender-glow);
+    }
+
+    .digit-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1.4rem, 3.6vw, 2.4rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .digit-card.micro .digit-val {
+      color: var(--lavender-glow);
+    }
+
+    .digit-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #a78bfa;
+    }
+
+    /* Progress bar */
+    .progress-section {
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .progress-bar-container {
+      height: 9px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid rgba(179, 157, 219, 0.15);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #7e57c2, #b39ddb, #ffca28);
+      border-radius: 20px;
+      transition: width 0.6s ease;
+    }
+
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 0.76rem;
+      color: #c4b5fd;
+    }
+
+    /* Weather Cards */
+    .weather-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .weather-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .weather-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .weather-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--lavender-glow), transparent);
+    }
+
+    .card-header-user {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .user-name {
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-sun-svg {
+      width: 22px;
+      height: 22px;
+      filter: drop-shadow(0 0 6px rgba(255, 202, 40, 0.6));
+    }
+
+    .icon-flower-svg {
+      width: 22px;
+      height: 22px;
+      filter: drop-shadow(0 0 6px rgba(179, 157, 219, 0.6));
+    }
+
+    .user-location-sub {
+      font-size: 0.8rem;
+      color: var(--lavender-soft);
+      margin-top: 2px;
+    }
+
+    .weather-condition-badge {
+      font-size: 0.74rem;
+      font-weight: 600;
+      background: rgba(179, 157, 219, 0.15);
+      border: 1px solid var(--card-border);
+      padding: 4px 10px;
+      border-radius: 20px;
+      color: #ede9fe;
+    }
+
+    .weather-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .temp-big {
+      font-size: clamp(2.4rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1;
+      color: #ffffff;
+    }
+
+    .temp-feels {
+      font-size: 0.8rem;
+      color: #c4b5fd;
+      margin-top: 4px;
+    }
+
+    .weather-icon-dynamic {
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .weather-stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(179, 157, 219, 0.15);
+      font-size: 0.75rem;
+    }
+
+    .stat-label {
+      color: #a78bfa;
+      font-size: 0.68rem;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* Micro Highlights */
+    .moments-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .moments-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .moment-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(14px);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .moment-card-icon {
+      width: 28px;
+      height: 28px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+
+    .moment-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #a78bfa;
+      margin-bottom: 4px;
+    }
+
+    .moment-value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      position: relative;
+      display: inline-block;
+    }
+
+    .moment-desc {
+      font-size: 0.76rem;
+      color: #c4b5fd;
+      line-height: 1.4;
+    }
+
+    .tick-floating-heart {
+      position: absolute;
+      pointer-events: none;
+      animation: floatTickHeart 1.6s ease-out forwards;
+      color: #f48fb1;
+      font-size: 1.1rem;
+      z-index: 10;
+    }
+
+    @keyframes floatTickHeart {
+      0% { transform: translateY(0) scale(0.6); opacity: 1; }
+      100% { transform: translateY(-40px) scale(1.3); opacity: 0; }
+    }
+
+    /* Spotify Music Section */
+    .spotify-section {
+      margin-top: 6px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+
+    .section-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--lavender-glow);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spotify-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 768px) {
+      .spotify-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .spotify-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(14px);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .spotify-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .spotify-for-tag {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dedicated-badge {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--lavender-glow);
+      font-style: italic;
+      margin-top: 3px;
+    }
+
+    .btn-group-spotify {
+      display: flex;
+      gap: 6px;
+    }
+
+    .change-song-btn {
+      background: rgba(179, 157, 219, 0.12);
+      border: 1px solid var(--card-border);
+      color: var(--lavender-soft);
+      padding: 5px 11px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .change-song-btn:hover {
+      background: rgba(179, 157, 219, 0.28);
+      color: #ffffff;
+    }
+
+    .spotify-iframe-wrap {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      background: #121212;
+      min-height: 152px;
+    }
+
+    /* Interactive Teddy Hug Modal */
+    #welcome-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(10, 8, 20, 0.94);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+      cursor: pointer;
+    }
+
+    #welcome-modal.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .modal-content-box {
+      background: rgba(24, 19, 44, 0.9);
+      border: 1px solid rgba(179, 157, 219, 0.4);
+      border-radius: 34px;
+      padding: 36px 24px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(126, 87, 194, 0.3);
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.85); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .greeting-badge {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--lavender-glow);
+      background: rgba(179, 157, 219, 0.16);
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 12px;
+    }
+
+    .greeting-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    /* Teddy Bear Stage with Deep Hug Animation */
+    .teddy-stage {
+      position: relative;
+      height: 160px;
+      width: 100%;
+      margin: 10px 0 16px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: visible;
+    }
+
+    .teddy-actor {
+      position: absolute;
+      width: 86px;
+      height: 100px;
+      transition: transform 0.4s ease;
+    }
+
+    .teddy-left {
+      animation: teddyWalkFromFarLeft 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    .teddy-right {
+      animation: teddyWalkFromFarRight 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes teddyWalkFromFarLeft {
+      0% { transform: translateX(-240px) rotate(-12deg); }
+      40% { transform: translateX(-110px) rotate(6deg) translateY(-8px); }
+      75% { transform: translateX(-25px) rotate(-3deg); }
+      100% { transform: translateX(-6px) rotate(9deg); }
+    }
+
+    @keyframes teddyWalkFromFarRight {
+      0% { transform: translateX(240px) rotate(12deg); }
+      40% { transform: translateX(110px) rotate(-6deg) translateY(-8px); }
+      75% { transform: translateX(25px) rotate(3deg); }
+      100% { transform: translateX(6px) rotate(-9deg); }
+    }
+
+    .tea-clink-stage {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: showTeaClink 2.6s ease-out forwards;
+      animation-delay: 2.2s;
+    }
+
+    @keyframes showTeaClink {
+      0% { transform: translateX(-50%) translateY(15px) scale(0.5); opacity: 0; }
+      50% { transform: translateX(-50%) translateY(-10px) scale(1.15); opacity: 1; }
+      100% { transform: translateX(-50%) translateY(-6px) scale(1); opacity: 1; }
+    }
+
+    .tea-cup-icon {
+      width: 26px;
+      height: 26px;
+      filter: drop-shadow(0 0 6px rgba(255, 202, 40, 0.6));
+    }
+
+    .tea-cup-left { animation: cupCheersLeft 1.2s ease-in-out infinite alternate; }
+    .tea-cup-right { animation: cupCheersRight 1.2s ease-in-out infinite alternate; }
+
+    @keyframes cupCheersLeft {
+      0% { transform: rotate(-8deg); }
+      100% { transform: rotate(10deg); }
+    }
+    @keyframes cupCheersRight {
+      0% { transform: rotate(8deg); }
+      100% { transform: rotate(-10deg); }
+    }
+
+    .hug-heart-burst {
+      position: absolute;
+      font-size: 1.6rem;
+      pointer-events: none;
+      opacity: 0;
+      animation: burstHearts 2.4s ease-out infinite;
+      animation-delay: 2s;
+    }
+
+    .hug-heart-burst:nth-child(1) { top: 15px; left: 47%; animation-delay: 2.1s; }
+    .hug-heart-burst:nth-child(2) { top: -14px; left: 40%; animation-delay: 2.4s; }
+    .hug-heart-burst:nth-child(3) { top: 5px; left: 56%; animation-delay: 2.6s; }
+    .hug-heart-burst:nth-child(4) { top: -22px; left: 49%; font-size: 2.2rem; animation-delay: 2.8s; }
+
+    @keyframes burstHearts {
+      0% { transform: translateY(10px) scale(0); opacity: 0; }
+      50% { opacity: 1; transform: translateY(-28px) scale(1.3); }
+      100% { transform: translateY(-60px) scale(1); opacity: 0; }
+    }
+
+    .modal-subtitle {
+      font-size: 0.88rem;
+      color: #c4b5fd;
+      line-height: 1.5;
+      margin-bottom: 22px;
+    }
+
+    .enter-btn {
+      background: linear-gradient(135deg, #7e57c2, #b39ddb);
+      color: #ffffff;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(126, 87, 194, 0.45);
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .enter-btn:hover {
+      transform: scale(1.04);
+      box-shadow: 0 10px 28px rgba(126, 87, 194, 0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sky Canvas for Stars, Fireflies & Skies -->
+  <canvas id="atmosphere-canvas"></canvas>
+  <div class="ambient-mesh"></div>
+
+  <!-- Daytime Flight Silhouette -->
+  <div class="airplane-fly" id="day-airplane">
+    <div class="contrail"></div>
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff" style="transform: rotate(45deg);">
+      <path d="M21 16v-2l-8-5V3.5c0-.83-.67-1.5-1.5-1.5S10 2.67 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5l8 2.5z"/>
+    </svg>
+  </div>
+
+  <!-- Floating Hearts Background -->
+  <div class="floating-hearts-container" id="hearts-bg"></div>
+
+  <!-- Interactive Teddy Hug Modal -->
+  <div id="welcome-modal">
+    <div class="modal-content-box" onclick="event.stopPropagation()">
+      <div class="greeting-badge" id="dynamic-greeting-badge">Good Evening ✨</div>
+      <h2 class="greeting-title" id="dynamic-greeting-title">Bhanu & Gun</h2>
+
+      <div class="teddy-stage">
+        <div class="hug-heart-burst">💖</div>
+        <div class="hug-heart-burst">🌸</div>
+        <div class="hug-heart-burst">✨</div>
+        <div class="hug-heart-burst">💕</div>
+
+        <div class="tea-clink-stage" id="tea-clink-box">
+          <svg class="tea-cup-icon tea-cup-left" viewBox="0 0 24 24" fill="#ffca28">
+            <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/>
+          </svg>
+          <span style="font-size:0.95rem;">☕✨</span>
+          <svg class="tea-cup-icon tea-cup-right" viewBox="0 0 24 24" fill="#ffca28">
+            <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/>
+          </svg>
+        </div>
+
+        <!-- Left Teddy (Bhanu) -->
+        <div class="teddy-actor teddy-left">
+          <svg viewBox="0 0 100 115" width="100%" height="100%">
+            <circle cx="28" cy="24" r="14" fill="#a0714b"/>
+            <circle cx="28" cy="24" r="8" fill="#d7a982"/>
+            <circle cx="72" cy="24" r="14" fill="#a0714b"/>
+            <circle cx="72" cy="24" r="8" fill="#d7a982"/>
+            <ellipse cx="50" cy="74" rx="26" ry="28" fill="#a0714b"/>
+            <ellipse cx="50" cy="75" rx="17" ry="19" fill="#d7a982"/>
+            <circle cx="50" cy="42" r="26" fill="#a0714b"/>
+            <ellipse cx="50" cy="49" rx="13" ry="9" fill="#d7a982"/>
+            <polygon points="46,45 54,45 50,50" fill="#3e2723"/>
+            <circle cx="41" cy="38" r="3.2" fill="#2d1d17"/>
+            <circle cx="59" cy="38" r="3.2" fill="#2d1d17"/>
+            <ellipse cx="36" cy="45" rx="4" ry="2.5" fill="#f48fb1" opacity="0.6"/>
+            <ellipse cx="64" cy="45" rx="4" ry="2.5" fill="#f48fb1" opacity="0.6"/>
+            <ellipse cx="68" cy="65" rx="16" ry="7.5" fill="#a0714b" transform="rotate(30 68 65)"/>
+          </svg>
+        </div>
+
+        <!-- Right Teddy (Gun) -->
+        <div class="teddy-actor teddy-right">
+          <svg viewBox="0 0 100 115" width="100%" height="100%">
+            <circle cx="72" cy="24" r="14" fill="#c69062"/>
+            <circle cx="72" cy="24" r="8" fill="#ebd0b5"/>
+            <circle cx="28" cy="24" r="14" fill="#c69062"/>
+            <circle cx="28" cy="24" r="8" fill="#ebd0b5"/>
+            <ellipse cx="28" cy="16" rx="6" ry="4" fill="#b39ddb" transform="rotate(-20 28 16)"/>
+            <ellipse cx="36" cy="18" rx="6" ry="4" fill="#b39ddb" transform="rotate(20 36 18)"/>
+            <circle cx="32" cy="17" r="3" fill="#ffca28"/>
+            <ellipse cx="50" cy="74" rx="26" ry="28" fill="#c69062"/>
+            <ellipse cx="50" cy="75" rx="17" ry="19" fill="#ebd0b5"/>
+            <circle cx="50" cy="42" r="26" fill="#c69062"/>
+            <ellipse cx="50" cy="49" rx="13" ry="9" fill="#ebd0b5"/>
+            <polygon points="46,45 54,45 50,50" fill="#3e2723"/>
+            <circle cx="41" cy="38" r="3.2" fill="#2d1d17"/>
+            <circle cx="59" cy="38" r="3.2" fill="#2d1d17"/>
+            <ellipse cx="36" cy="45" rx="4" ry="2.5" fill="#f48fb1" opacity="0.75"/>
+            <ellipse cx="64" cy="45" rx="4" ry="2.5" fill="#f48fb1" opacity="0.75"/>
+            <ellipse cx="32" cy="65" rx="16" ry="7.5" fill="#c69062" transform="rotate(-30 32 65)"/>
+          </svg>
+        </div>
+      </div>
+
+      <p class="modal-subtitle">Every microsecond brings us closer to November 3rd.<br>Together under the very same sky 🤍</p>
+      <button class="enter-btn" onclick="closeGreetingModal()">
+        <span>Open Our Countdown</span>
+        <span>✨</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Bottom Sunflower and Lavender Garden -->
+  <div class="garden-wrapper" id="garden-container"></div>
+
+  <!-- Main Web Space -->
+  <div class="app-container">
+
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="nav-badge">
+        <span class="pulse-dot"></span>
+        <span>LIVE SYNC ACTIVE • HIGH PRECISION</span>
+      </div>
+      <div class="nav-actions">
+        <button class="action-btn" id="sound-btn" onclick="toggleSound()">
+          <span id="sound-icon">🔈</span>
+          <span id="sound-text">Sound: Off</span>
+        </button>
+        <button class="action-btn" onclick="syncWeather()">
+          <span>🔄</span>
+          <span>Refresh Weather</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Countdown Section -->
+    <section class="countdown-hero">
+      <span class="countdown-subheading">UNTIL OUR MOMENT ARRIVES</span>
+      <h1 class="hero-title">3 November, 08:00 AM</h1>
+      <p class="hero-caption">Every passing millisecond and microsecond belongs to us.</p>
+
+      <div class="digits-grid">
+        <div class="digit-card">
+          <div class="digit-val" id="val-days">00</div>
+          <div class="digit-label">Days</div>
+        </div>
+        <div class="digit-card">
+          <div class="digit-val" id="val-hours">00</div>
+          <div class="digit-label">Hours</div>
+        </div>
+        <div class="digit-card">
+          <div class="digit-val" id="val-minutes">00</div>
+          <div class="digit-label">Minutes</div>
+        </div>
+        <div class="digit-card">
+          <div class="digit-val" id="val-seconds">00</div>
+          <div class="digit-label">Seconds</div>
+        </div>
+        <div class="digit-card micro">
+          <div class="digit-val" id="val-millis">000</div>
+          <div class="digit-label">Millis</div>
+        </div>
+        <div class="digit-card micro">
+          <div class="digit-val" id="val-micros">000</div>
+          <div class="digit-label">Micros</div>
+        </div>
+      </div>
+
+      <div class="progress-section">
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+        <div class="progress-info">
+          <span>Journey Completed</span>
+          <span id="progress-percent" style="font-weight:700; color:#fff;">0.00%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Weather Hub -->
+    <section class="weather-container">
+      
+      <!-- Bhanu Sharma (Todaraisingh) -->
+      <div class="weather-card" id="card-bhanu">
+        <div class="card-header-user">
+          <div>
+            <div class="user-name">
+              <span>Bhanu Sharma</span>
+              <svg class="icon-sun-svg" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="5" fill="#ffca28"/>
+                <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#ffca28" stroke-width="2.2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="user-location-sub">Todaraisingh, Rajasthan</div>
+          </div>
+          <div class="weather-condition-badge" id="bhanu-cond-badge">Syncing...</div>
+        </div>
+        <div class="weather-body">
+          <div>
+            <div class="temp-big" id="bhanu-temp">--°C</div>
+            <div class="temp-feels" id="bhanu-feels">Feels like --°C</div>
+          </div>
+          <div class="weather-icon-dynamic" id="bhanu-icon">
+            <svg viewBox="0 0 24 24" width="38" height="38" fill="#ffca28"><circle cx="12" cy="12" r="6"/></svg>
+          </div>
+        </div>
+        <div class="weather-stats-row">
+          <div>
+            <div class="stat-label">Humidity</div>
+            <div class="stat-value" id="bhanu-humidity">--%</div>
+          </div>
+          <div>
+            <div class="stat-label">Wind Speed</div>
+            <div class="stat-value" id="bhanu-wind">-- km/h</div>
+          </div>
+          <div>
+            <div class="stat-label">Local Time</div>
+            <div class="stat-value" id="bhanu-time">--:--</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gun Goyal (Vanasthali, Niwai Tonk) -->
+      <div class="weather-card" id="card-gun">
+        <div class="card-header-user">
+          <div>
+            <div class="user-name">
+              <span>Gun Goyal</span>
+              <svg class="icon-flower-svg" viewBox="0 0 24 24" fill="#b39ddb">
+                <circle cx="12" cy="7" r="3"/>
+                <circle cx="12" cy="17" r="3"/>
+                <circle cx="7" cy="12" r="3"/>
+                <circle cx="17" cy="12" r="3"/>
+                <circle cx="12" cy="12" r="3.2" fill="#ffca28"/>
+              </svg>
+            </div>
+            <div class="user-location-sub">Vanasthali, Niwai (Tonk)</div>
+          </div>
+          <div class="weather-condition-badge" id="gun-cond-badge">Syncing...</div>
+        </div>
+        <div class="weather-body">
+          <div>
+            <div class="temp-big" id="gun-temp">--°C</div>
+            <div class="temp-feels" id="gun-feels">Feels like --°C</div>
+          </div>
+          <div class="weather-icon-dynamic" id="gun-icon">
+            <svg viewBox="0 0 24 24" width="38" height="38" fill="#ffca28"><circle cx="12" cy="12" r="6"/></svg>
+          </div>
+        </div>
+        <div class="weather-stats-row">
+          <div>
+            <div class="stat-label">Humidity</div>
+            <div class="stat-value" id="gun-humidity">--%</div>
+          </div>
+          <div>
+            <div class="stat-label">Wind Speed</div>
+            <div class="stat-value" id="gun-wind">-- km/h</div>
+          </div>
+          <div>
+            <div class="stat-label">Local Time</div>
+            <div class="stat-value" id="gun-time">--:--</div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Micro Highlights Cards -->
+    <section class="moments-grid">
+      
+      <!-- Heartbeat Card -->
+      <div class="moment-card" id="heartbeat-card">
+        <div class="moment-card-icon">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="#f48fb1" style="filter: drop-shadow(0 0 8px #f48fb1);">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </div>
+        <div class="moment-title">Synchronized Heartbeats</div>
+        <div class="moment-value" id="heartbeat-count">3,200,000</div>
+        <div class="moment-desc">Ticking together until November 3rd... and infinite more will continue forever after our meeting 🤍</div>
+      </div>
+
+      <!-- Distance Card -->
+      <div class="moment-card">
+        <div class="moment-card-icon">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="#ffca28">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+          </svg>
+        </div>
+        <div class="moment-title">Distance Between Us</div>
+        <div class="moment-value">~58 KM</div>
+        <div class="moment-desc">Todaraisingh to Vanasthali Niwai — just a gentle ride away under the exact same sky.</div>
+      </div>
+
+      <!-- Peaceful Nights Card -->
+      <div class="moment-card">
+        <div class="moment-card-icon">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="#b39ddb">
+            <path d="M12.3 2a10 10 0 0 0-1.9 19.8 10 10 0 0 0 11.6-11.6A10 10 0 0 0 12.3 2z"/>
+          </svg>
+        </div>
+        <div class="moment-title">Peaceful Nights Remaining</div>
+        <div class="moment-value" id="nights-remaining">30 Nights</div>
+        <div class="moment-desc">Sleep warmly knowing that each morning brings us one step closer to November 3rd.</div>
+      </div>
+
+    </section>
+
+    <!-- Spotify Music Section -->
+    <section class="spotify-section">
+      <div class="section-title-wrap">
+        <div class="section-title">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="#1db954">
+            <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.623.623 0 0 1-.858.207c-2.35-1.436-5.308-1.76-8.794-.963a.625.625 0 0 1-.28-1.22c3.812-.871 7.086-.499 9.725 1.118a.625.625 0 0 1 .207.858zm1.226-2.723a.782.782 0 0 1-1.077.257c-2.69-1.654-6.79-2.133-9.97-1.168a.782.782 0 0 1-.454-1.5c3.633-1.103 8.167-.568 11.244 1.334a.782.782 0 0 1 .257 1.077zm.105-2.836C14.7 8.94 9.38 8.763 6.29 9.7a.937.937 0 1 1-.55-1.792c3.542-1.077 9.42-.87 13.11 1.32a.938.938 0 0 1-.933 1.637z"/>
+          </svg>
+          <span>OUR MELODIES & TUNES</span>
+        </div>
+      </div>
+
+      <div class="spotify-grid">
+        
+        <!-- Music For Gun -->
+        <div class="spotify-card">
+          <div class="spotify-card-header">
+            <div>
+              <div class="spotify-for-tag">
+                <span>🌸</span>
+                <span>Music for Gun</span>
+              </div>
+              <span class="dedicated-badge">Dedicated by Bhanu with love 🤍</span>
+            </div>
+            <div class="btn-group-spotify">
+              <button class="change-song-btn" onclick="promptChangeSpotify('gun')">Change Track</button>
+            </div>
+          </div>
+          <div class="spotify-iframe-wrap">
+            <iframe id="spotify-frame-gun" style="border-radius:12px" src="" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- Music For Bhanu -->
+        <div class="spotify-card">
+          <div class="spotify-card-header">
+            <div>
+              <div class="spotify-for-tag">
+                <span>☀️</span>
+                <span>Music for Bhanu</span>
+              </div>
+              <span class="dedicated-badge">Our Shared Rhythm ✨</span>
+            </div>
+            <div class="btn-group-spotify">
+              <button class="change-song-btn" onclick="promptChangeSpotify('bhanu')">Change Track</button>
+            </div>
+          </div>
+          <div class="spotify-iframe-wrap">
+            <iframe id="spotify-frame-bhanu" style="border-radius:12px" src="" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    /* =====================================================================
+       🎵 SPOTIFY SONGS CONFIGURATION (DIRECTLY EDIT HERE IN NOTEPAD):
+       Bas Spotify se gaane ka link copy karein aur in quotes " " ke andar daal dein!
+       Ye hamesha ke liye permanent save rahega aur Gun ko bhi yahi gaana dikhega!
+    ===================================================================== */
+    const SONG_FOR_GUN   = "https://open.spotify.com/track/1BxfuPKGuaTgP7aM0XbdCe"; // <-- Gun ke liye yahan link daalein
+    const SONG_FOR_BHANU = "https://open.spotify.com/track/6qzX4aJ7eL7vJ5a8yqYVvA"; // <-- Bhanu ke liye yahan link daalein
+    /* ===================================================================== */
+
+    // Target: 3 November 2026, 08:00 AM IST
+    const targetDate = new Date('2026-11-03T08:00:00+05:30').getTime();
+    const startDate = new Date('2026-10-01T00:00:00+05:30').getTime();
+
+    const COORDS = {
+      bhanu: { lat: 26.0244, lon: 75.3167, name: 'Todaraisingh' },
+      gun: { lat: 26.4069, lon: 75.8722, name: 'Vanasthali, Niwai' }
+    };
+
+    /* ----------------------------------------------------
+       1. Spotify Embed Engine (Supports any URL & Preserves)
+    ---------------------------------------------------- */
+    function getEmbedUrlFromInput(input) {
+      if (!input) return null;
+      input = input.trim();
+      
+      // Match track, album, playlist or episode from Spotify URL
+      const match = input.match(/(track|playlist|album|episode)\/([a-zA-Z0-9]+)/);
+      if (match) {
+        return `https://open.spotify.com/embed/${match[1]}/${match[2]}?utm_source=generator&theme=0`;
+      }
+      // If direct alphanumeric ID was provided
+      if (/^[a-zA-Z0-9]{20,24}$/.test(input)) {
+        return `https://open.spotify.com/embed/track/${input}?utm_source=generator&theme=0`;
+      }
+      return null;
+    }
+
+    function initSpotifyPlayers() {
+      // 1. Check URL parameters (e.g. ?gun=...&bhanu=...)
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlGun = urlParams.get('gun');
+      const urlBhanu = urlParams.get('bhanu');
+
+      // 2. Gun Player Setup
+      let finalEmbedGun = getEmbedUrlFromInput(urlGun);
+      if (!finalEmbedGun) {
+        try {
+          const cached = localStorage.getItem('spotify_gun');
+          if (cached) finalEmbedGun = getEmbedUrlFromInput(cached);
+        } catch(e) {}
+      }
+      if (!finalEmbedGun) finalEmbedGun = getEmbedUrlFromInput(SONG_FOR_GUN);
+      document.getElementById('spotify-frame-gun').src = finalEmbedGun;
+
+      // 3. Bhanu Player Setup
+      let finalEmbedBhanu = getEmbedUrlFromInput(urlBhanu);
+      if (!finalEmbedBhanu) {
+        try {
+          const cached = localStorage.getItem('spotify_bhanu');
+          if (cached) finalEmbedBhanu = getEmbedUrlFromInput(cached);
+        } catch(e) {}
+      }
+      if (!finalEmbedBhanu) finalEmbedBhanu = getEmbedUrlFromInput(SONG_FOR_BHANU);
+      document.getElementById('spotify-frame-bhanu').src = finalEmbedBhanu;
+    }
+
+    function promptChangeSpotify(person) {
+      const input = prompt(`Paste Spotify Song Link for ${person === 'gun' ? 'Gun' : 'Bhanu'}:`);
+      if (input) {
+        const embedUrl = getEmbedUrlFromInput(input);
+        if (embedUrl) {
+          document.getElementById(`spotify-frame-${person}`).src = embedUrl;
+          try {
+            localStorage.setItem(`spotify_${person}`, input.trim());
+          } catch(e) {}
+          alert(`Song updated! \n\nTip: To make it 100% permanent across all devices, open countdown.html in Notepad and paste it inside SONG_FOR_${person.toUpperCase()}!`);
+        } else {
+          alert('Please enter a valid Spotify song link.');
+        }
+      }
+    }
+
+    /* ----------------------------------------------------
+       2. Greetings & Tea Time Clinking
+    ---------------------------------------------------- */
+    function setDynamicGreeting() {
+      const now = new Date();
+      const hour = now.getHours();
+      let badgeText = "Good Evening ✨";
+      let greetingTitle = "Warm Wishes, Gun & Bhanu";
+
+      if (hour >= 4 && hour < 12) {
+        badgeText = "Good Morning ☀️";
+        greetingTitle = "Good Morning, Gun & Bhanu";
+      } else if (hour >= 12 && hour < 16) {
+        badgeText = "Good Afternoon 🌤️";
+        greetingTitle = "Good Afternoon, Gun & Bhanu";
+      } else if (hour >= 16 && hour < 21) {
+        badgeText = "Good Evening 🌅";
+        greetingTitle = "Good Evening, Gun & Bhanu";
+      } else {
+        badgeText = "Sweet Dreams 🌙✨";
+        greetingTitle = "Good Night, Gun & Bhanu";
+      }
+
+      document.getElementById('dynamic-greeting-badge').textContent = badgeText;
+      document.getElementById('dynamic-greeting-title').textContent = greetingTitle;
+
+      const airplane = document.getElementById('day-airplane');
+      if (hour >= 6 && hour <= 18) {
+        airplane.style.display = 'flex';
+      } else {
+        airplane.style.display = 'none';
+      }
+    }
+
+    function closeGreetingModal() {
+      const modal = document.getElementById('welcome-modal');
+      modal.classList.add('hidden');
+      if (soundEnabled) playChime();
+    }
+
+    document.getElementById('welcome-modal').addEventListener('click', closeGreetingModal);
+
+    /* ----------------------------------------------------
+       3. Precision Countdown Loop & Heartbeat Pulse
+    ---------------------------------------------------- */
+    const elDays = document.getElementById('val-days');
+    const elHours = document.getElementById('val-hours');
+    const elMinutes = document.getElementById('val-minutes');
+    const elSeconds = document.getElementById('val-seconds');
+    const elMillis = document.getElementById('val-millis');
+    const elMicros = document.getElementById('val-micros');
+    const elProgress = document.getElementById('progress-bar');
+    const elProgressPercent = document.getElementById('progress-percent');
+    const elHeartbeats = document.getElementById('heartbeat-count');
+    const elNights = document.getElementById('nights-remaining');
+    const heartbeatCard = document.getElementById('heartbeat-card');
+
+    let lastHeartbeatSec = -1;
+    let lastSecond = -1;
+
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        elDays.textContent = "00";
+        elHours.textContent = "00";
+        elMinutes.textContent = "00";
+        elSeconds.textContent = "00";
+        elMillis.textContent = "000";
+        elMicros.textContent = "000";
+        elProgress.style.width = "100%";
+        elProgressPercent.textContent = "100.00%";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      const millis = Math.floor(diff % 1000);
+      const micros = Math.floor((performance.now() * 1000) % 1000);
+
+      elDays.textContent = String(days).padStart(2, '0');
+      elHours.textContent = String(hours).padStart(2, '0');
+      elMinutes.textContent = String(minutes).padStart(2, '0');
+      elSeconds.textContent = String(seconds).padStart(2, '0');
+      elMillis.textContent = String(millis).padStart(3, '0');
+      elMicros.textContent = String(micros).padStart(3, '0');
+
+      const totalSpan = targetDate - startDate;
+      const elapsed = now - startDate;
+      const pct = Math.min(100, Math.max(0, (elapsed / totalSpan) * 100));
+      elProgress.style.width = pct.toFixed(2) + "%";
+      elProgressPercent.textContent = pct.toFixed(2) + "%";
+
+      const approxBeatsLeft = Math.floor((diff / 1000) * 1.2);
+      elHeartbeats.textContent = approxBeatsLeft.toLocaleString('en-US');
+      elNights.textContent = `${days} Nights`;
+
+      // Spawn a heart for every heartbeat tick
+      if (seconds !== lastHeartbeatSec) {
+        lastHeartbeatSec = seconds;
+        spawnHeartbeatPulse();
+      }
+
+      if (soundEnabled && seconds !== lastSecond) {
+        lastSecond = seconds;
+        playSoftTick();
+      }
+
+      requestAnimationFrame(updateCountdown);
+    }
+
+    function spawnHeartbeatPulse() {
+      const span = document.createElement('span');
+      span.className = 'tick-floating-heart';
+      span.textContent = '🤍';
+      span.style.left = (Math.random() * 60 + 20) + 'px';
+      span.style.top = '12px';
+      heartbeatCard.appendChild(span);
+      setTimeout(() => span.remove(), 1600);
+    }
+
+    /* ----------------------------------------------------
+       4. Audio Engine
+    ---------------------------------------------------- */
+    let audioCtx = null;
+    let soundEnabled = false;
+
+    function initAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    function toggleSound() {
+      initAudio();
+      soundEnabled = !soundEnabled;
+      const icon = document.getElementById('sound-icon');
+      const text = document.getElementById('sound-text');
+      if (soundEnabled) {
+        icon.textContent = "🔊";
+        text.textContent = "Sound: On";
+        playChime();
+      } else {
+        icon.textContent = "🔈";
+        text.textContent = "Sound: Off";
+      }
+    }
+
+    function playSoftTick() {
+      if (!audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(820, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.04);
+      } catch (e) {}
+    }
+
+    function playChime() {
+      if (!audioCtx) return;
+      try {
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime + i * 0.09);
+          gain.gain.setValueAtTime(0.06, audioCtx.currentTime + i * 0.09);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + i * 0.09 + 0.6);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(audioCtx.currentTime + i * 0.09);
+          osc.stop(audioCtx.currentTime + i * 0.09 + 0.6);
+        });
+      } catch(e) {}
+    }
+
+    /* ----------------------------------------------------
+       5. Live Weather Sync (Todaraisingh & Vanasthali)
+    ---------------------------------------------------- */
+    const WMO_MAP = {
+      0: { text: "Clear Sky", iconDay: "☀️", iconNight: "🌙" },
+      1: { text: "Mainly Clear", iconDay: "🌤️", iconNight: "🌙" },
+      2: { text: "Partly Cloudy", iconDay: "⛅", iconNight: "☁️" },
+      3: { text: "Overcast Clouds", iconDay: "☁️", iconNight: "☁️" },
+      45: { text: "Gentle Fog", iconDay: "🌫️", iconNight: "🌫️" },
+      51: { text: "Light Drizzle", iconDay: "🌦️", iconNight: "🌧️" },
+      61: { text: "Gentle Rain", iconDay: "🌧️", iconNight: "🌧️" },
+      80: { text: "Passing Showers", iconDay: "🌦️", iconNight: "🌧" }
+    };
+
+    async function syncWeather() {
+      try {
+        const urlBhanu = `https://api.open-meteo.com/v1/forecast?latitude=${COORDS.bhanu.lat}&longitude=${COORDS.bhanu.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m&timezone=auto`;
+        const urlGun = `https://api.open-meteo.com/v1/forecast?latitude=${COORDS.gun.lat}&longitude=${COORDS.gun.lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m&timezone=auto`;
+
+        const [resB, resG] = await Promise.all([fetch(urlBhanu), fetch(urlGun)]);
+        const dataB = await resB.json();
+        const dataG = await resG.json();
+
+        applyWeatherData('bhanu', dataB.current);
+        applyWeatherData('gun', dataG.current);
+
+        const avgWind = ((dataB.current?.wind_speed_10m || 8) + (dataG.current?.wind_speed_10m || 8)) / 2;
+        adjustFlowerWind(avgWind);
+      } catch (err) {
+        console.log("Weather sync notice", err);
+      }
+    }
+
+    function applyWeatherData(person, current) {
+      if (!current) return;
+      const isDay = current.is_day === 1;
+      const code = current.weather_code || 0;
+      const wmo = WMO_MAP[code] || { text: "Clear Pleasant Sky", iconDay: "☀️", iconNight: "🌙" };
+
+      document.getElementById(`${person}-temp`).textContent = `${Math.round(current.temperature_2m)}°C`;
+      document.getElementById(`${person}-feels`).textContent = `Feels like ${Math.round(current.apparent_temperature)}°C`;
+      document.getElementById(`${person}-cond-badge`).textContent = `${wmo.text}`;
+      
+      const iconContainer = document.getElementById(`${person}-icon`);
+      if (isDay) {
+        iconContainer.innerHTML = `<svg viewBox="0 0 24 24" width="38" height="38" fill="#ffca28"><circle cx="12" cy="12" r="6"/><path d="M12 2v3M12 19v3M4 12H1M23 12h-3" stroke="#ffca28" stroke-width="2" stroke-linecap="round"/></svg>`;
+      } else {
+        iconContainer.innerHTML = `<svg viewBox="0 0 24 24" width="36" height="36" fill="#ffca28"><path d="M12.3 2a10 10 0 0 0-1.9 19.8 10 10 0 0 0 11.6-11.6A10 10 0 0 0 12.3 2z"/></svg>`;
+      }
+
+      document.getElementById(`${person}-humidity`).textContent = `${current.relative_humidity_2m}%`;
+      document.getElementById(`${person}-wind`).textContent = `${current.wind_speed_10m} km/h`;
+      
+      const nowStr = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+      document.getElementById(`${person}-time`).textContent = nowStr;
+    }
+
+    function adjustFlowerWind(windSpeed) {
+      const root = document.documentElement;
+      if (windSpeed < 4) {
+        root.style.setProperty('--sway-speed', '6s');
+        root.style.setProperty('--sway-angle', '1.2deg');
+      } else if (windSpeed < 12) {
+        root.style.setProperty('--sway-speed', '3.5s');
+        root.style.setProperty('--sway-angle', '4deg');
+      } else {
+        root.style.setProperty('--sway-speed', '1.6s');
+        root.style.setProperty('--sway-angle', '7.5deg');
+      }
+    }
+
+    /* ----------------------------------------------------
+       6. Atmospheric Sky Canvas with Raat ke Jugnu
+    ---------------------------------------------------- */
+    const canvas = document.getElementById('atmosphere-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let fireflies = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      initFireflies();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function initFireflies() {
+      fireflies = [];
+      const count = Math.min(50, Math.floor(width / 24));
+      for (let i = 0; i < count; i++) {
+        fireflies.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 2 + 1,
+          speedY: (Math.random() - 0.5) * 0.45,
+          speedX: (Math.random() - 0.5) * 0.55,
+          alpha: Math.random(),
+          alphaDelta: Math.random() * 0.02 + 0.01
+        });
+      }
+    }
+
+    function drawAtmosphere() {
+      ctx.clearRect(0, 0, width, height);
+      const hour = new Date().getHours();
+      const isNight = hour < 6 || hour >= 19;
+
+      let grad = ctx.createLinearGradient(0, 0, width, height);
+      if (hour >= 5 && hour < 8) {
+        grad.addColorStop(0, '#1c1328');
+        grad.addColorStop(0.5, '#3b1c3c');
+        grad.addColorStop(1, '#ff8a65'); // Golden Sunrise
+      } else if (hour >= 8 && hour < 17) {
+        grad.addColorStop(0, '#120f24');
+        grad.addColorStop(0.5, '#1e163b');
+        grad.addColorStop(1, '#2c2250'); // Daylight
+      } else if (hour >= 17 && hour < 19) {
+        grad.addColorStop(0, '#191124');
+        grad.addColorStop(0.5, '#4a2545');
+        grad.addColorStop(1, '#ba68c8'); // Lavender Sunset
+      } else {
+        grad.addColorStop(0, '#090812');
+        grad.addColorStop(0.5, '#120e24');
+        grad.addColorStop(1, '#181230'); // Night
+      }
+
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Render Jugnu (Fireflies)
+      fireflies.forEach(f => {
+        f.alpha += f.alphaDelta;
+        if (f.alpha > 1 || f.alpha < 0) f.alphaDelta = -f.alphaDelta;
+
+        ctx.beginPath();
+        if (isNight) {
+          ctx.fillStyle = `rgba(220, 255, 120, ${Math.max(0.1, f.alpha)})`;
+          ctx.shadowColor = '#d4ff68';
+          ctx.shadowBlur = 10;
+        } else {
+          ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0.1, f.alpha * 0.4)})`;
+          ctx.shadowBlur = 0;
+        }
+        ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+        ctx.fill();
+
+        f.y += f.speedY;
+        f.x += f.speedX;
+        if (f.y < 0) f.y = height;
+        if (f.y > height) f.y = 0;
+        if (f.x < 0) f.x = width;
+        if (f.x > width) f.x = 0;
+      });
+      ctx.shadowBlur = 0;
+
+      requestAnimationFrame(drawAtmosphere);
+    }
+
+    /* ----------------------------------------------------
+       7. Sunflower & Lavender Garden Generator
+    ---------------------------------------------------- */
+    function generateGarden() {
+      const garden = document.getElementById('garden-container');
+      const flowersCount = Math.floor(window.innerWidth / 36);
+      garden.innerHTML = '';
+
+      for (let i = 0; i < flowersCount; i++) {
+        const isSunflower = Math.random() > 0.45;
+        const flower = document.createElement('div');
+        flower.className = 'flower';
+        const height = Math.floor(Math.random() * 26 + 64);
+
+        if (isSunflower) {
+          flower.innerHTML = `
+            <svg width="34" height="${height}" viewBox="0 0 34 85">
+              <path d="M17,85 Q16,55 17,32" stroke="#4caf50" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M17,55 Q6,50 12,42" fill="#81c784" opacity="0.8"/>
+              <g transform="translate(17,30)">
+                <circle cx="0" cy="0" r="14" fill="#ffca28"/>
+                <circle cx="0" cy="0" r="7" fill="#5d4037"/>
+              </g>
+            </svg>
+          `;
+        } else {
+          flower.innerHTML = `
+            <svg width="24" height="${height}" viewBox="0 0 24 85">
+              <path d="M12,85 Q11,50 12,28" stroke="#388e3c" stroke-width="2" fill="none" stroke-linecap="round"/>
+              <g transform="translate(12,25)">
+                <ellipse cx="-2" cy="-2" rx="3.5" ry="5.5" fill="#b39ddb" transform="rotate(-25)"/>
+                <ellipse cx="2" cy="-6" rx="3.5" ry="5.5" fill="#9575cd" transform="rotate(25)"/>
+                <ellipse cx="-2" cy="-12" rx="3" ry="5" fill="#ba68c8" transform="rotate(-20)"/>
+                <ellipse cx="2" cy="-16" rx="3" ry="5" fill="#b39ddb" transform="rotate(20)"/>
+                <ellipse cx="0" cy="-22" rx="2.5" ry="4" fill="#d1c4e9"/>
+              </g>
+            </svg>
+          `;
+        }
+        garden.appendChild(flower);
+      }
+    }
+
+    /* ----------------------------------------------------
+       8. Floating Hearts Generator
+    ---------------------------------------------------- */
+    function createFloatingHearts() {
+      const container = document.getElementById('hearts-bg');
+      const hearts = ['🤍', '🌸', '✨', '💜'];
+      setInterval(() => {
+        const span = document.createElement('span');
+        span.className = 'bg-heart';
+        span.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        span.style.left = Math.random() * 95 + '%';
+        span.style.animationDuration = (Math.random() * 5 + 8) + 's';
+        span.style.fontSize = (Math.random() * 0.8 + 0.8) + 'rem';
+        container.appendChild(span);
+        setTimeout(() => span.remove(), 13000);
+      }, 1600);
+    }
+
+    // Startup
+    window.addEventListener('DOMContentLoaded', () => {
+      setDynamicGreeting();
+      resizeCanvas();
+      drawAtmosphere();
+      generateGarden();
+      createFloatingHearts();
+      initSpotifyPlayers();
+      updateCountdown();
+      syncWeather();
+    });
+
+    window.addEventListener('resize', generateGarden);
+  </script>
+</body>
+</html>
