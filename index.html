@@ -37,7 +37,7 @@
       position: relative;
     }
 
-    /* Seamless Atmospheric Sky Canvas */
+    /* Atmospheric Sky Canvas */
     #atmosphere-canvas {
       position: fixed;
       inset: 0;
@@ -58,7 +58,7 @@
       mix-blend-mode: screen;
     }
 
-    /* Floating Background Hearts */
+    /* Floating Hearts */
     .floating-hearts-container {
       position: fixed;
       inset: 0;
@@ -81,7 +81,7 @@
       100% { transform: translateY(-110vh) scale(1.1) rotate(25deg); opacity: 0; }
     }
 
-    /* Daytime Airplane */
+    /* Airplane */
     .airplane-fly {
       position: fixed;
       top: 14%;
@@ -109,7 +109,7 @@
       100% { transform: translateX(calc(100vw + 240px)) translateY(35px); opacity: 0; }
     }
 
-    /* Bottom Flower Garden (Wind-reactive) */
+    /* Bottom Garden */
     .garden-wrapper {
       position: fixed;
       bottom: 0;
@@ -139,7 +139,7 @@
       100% { transform: rotate(var(--sway-angle)); }
     }
 
-    /* Main Container */
+    /* App Container */
     .app-container {
       position: relative;
       z-index: 5;
@@ -338,7 +338,64 @@
       color: #c4b5fd;
     }
 
-    /* Weather Cards */
+    /* ----------------------------------------------------
+       WEATHER HUB & ANIMATED CAT SECTION
+    ---------------------------------------------------- */
+    .weather-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    /* Cat Animation Track across name cards */
+    .cat-track {
+      position: absolute;
+      top: -38px;
+      left: 0;
+      width: 100%;
+      height: 48px;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    .animated-kitty {
+      position: absolute;
+      width: 48px;
+      height: 40px;
+      transform-origin: bottom center;
+      animation: catAngadaaiAndWalk 14s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 1.2s;
+    }
+
+    @keyframes catAngadaaiAndWalk {
+      /* Stage 1: Sleeping peacefully on Bhanu's card (0-2s) */
+      0%   { left: 5%; transform: translateY(12px) scale(0.9, 0.75); opacity: 1; }
+      12%  { left: 5%; transform: translateY(12px) scale(0.9, 0.75); }
+
+      /* Stage 2: Angadaai! Arch back up (15-22%) */
+      16%  { left: 5%; transform: translateY(4px) scale(0.85, 1.25); } /* Arch up */
+      20%  { left: 5%; transform: translateY(14px) scale(1.15, 0.8); } /* Front stretch */
+      24%  { left: 6%; transform: translateY(8px) scale(1, 1); }      /* Ready to walk */
+
+      /* Stage 3: Walk across Bhanu's card (24-42%) */
+      30%  { left: 16%; transform: translateY(6px) rotate(2deg); }
+      36%  { left: 28%; transform: translateY(8px) rotate(-2deg); }
+      42%  { left: 40%; transform: translateY(6px) rotate(0deg); }
+
+      /* Stage 4: Playful Jump over the gap into Gun's card (44-54%) */
+      47%  { left: 48%; transform: translateY(-24px) rotate(-14deg); } /* In the air! */
+      52%  { left: 56%; transform: translateY(7px) rotate(4deg); }   /* Landed smoothly */
+
+      /* Stage 5: Strolling happily across Gun's card (54-76%) */
+      60%  { left: 66%; transform: translateY(6px) rotate(-2deg); }
+      68%  { left: 78%; transform: translateY(8px) rotate(2deg); }
+      74%  { left: 88%; transform: translateY(6px) rotate(0deg); }
+
+      /* Stage 6: Joyful jump off-screen right! (78-100%) */
+      80%  { left: 95%; transform: translateY(-18px) rotate(18deg); opacity: 1; }
+      86%  { left: 104%; transform: translateY(35px) rotate(32deg); opacity: 0; }
+      100% { left: 105%; transform: translateY(35px); opacity: 0; }
+    }
+
     .weather-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -348,6 +405,20 @@
     @media (max-width: 768px) {
       .weather-container {
         grid-template-columns: 1fr;
+      }
+      .animated-kitty {
+        animation: catAngadaaiMobile 12s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        animation-delay: 1.2s;
+      }
+      @keyframes catAngadaaiMobile {
+        0%, 15% { left: 6%; transform: translateY(12px) scale(0.85, 0.7); opacity: 1; }
+        20%     { left: 6%; transform: translateY(2px) scale(0.8, 1.2); }
+        25%     { left: 6%; transform: translateY(14px) scale(1.1, 0.75); }
+        30%     { left: 8%; transform: translateY(8px) scale(1, 1); }
+        55%     { left: 50%; transform: translateY(6px); }
+        75%     { left: 82%; transform: translateY(6px); opacity: 1; }
+        85%     { left: 100%; transform: translateY(-15px) rotate(20deg); opacity: 0; }
+        100%    { left: 102%; opacity: 0; }
       }
     }
 
@@ -636,7 +707,9 @@
       min-height: 152px;
     }
 
-    /* Interactive Teddy Hug Modal */
+    /* ----------------------------------------------------
+       TEDDY HUG & STEAMING CHAI/COFFEE POPUP
+    ---------------------------------------------------- */
     #welcome-modal {
       position: fixed;
       inset: 0;
@@ -659,10 +732,10 @@
     }
 
     .modal-content-box {
-      background: rgba(24, 19, 44, 0.9);
+      background: rgba(24, 19, 44, 0.92);
       border: 1px solid rgba(179, 157, 219, 0.4);
       border-radius: 34px;
-      padding: 36px 24px;
+      padding: 34px 22px 28px 22px;
       max-width: 480px;
       width: 100%;
       text-align: center;
@@ -684,7 +757,7 @@
       background: rgba(179, 157, 219, 0.16);
       padding: 6px 16px;
       border-radius: 50px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .greeting-title {
@@ -692,15 +765,15 @@
       font-size: clamp(1.6rem, 4vw, 2.2rem);
       font-weight: 600;
       color: #ffffff;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
-    /* Teddy Bear Stage with Deep Hug Animation */
+    /* Teddy Bear Stage */
     .teddy-stage {
       position: relative;
-      height: 160px;
+      height: 165px;
       width: 100%;
-      margin: 10px 0 16px 0;
+      margin: 8px 0 12px 0;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -709,95 +782,180 @@
 
     .teddy-actor {
       position: absolute;
-      width: 86px;
-      height: 100px;
-      transition: transform 0.4s ease;
+      width: 88px;
+      height: 104px;
+      transform-origin: bottom center;
     }
 
+    /* Teddies Waddle and Tight Squish Hug */
     .teddy-left {
-      animation: teddyWalkFromFarLeft 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: teddyWaddleLeft 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+
+    @keyframes teddyWaddleLeft {
+      0%   { transform: translateX(-220px) rotate(-8deg) translateY(0); }
+      20%  { transform: translateX(-160px) rotate(8deg) translateY(-8px); }
+      40%  { transform: translateX(-105px) rotate(-8deg) translateY(0); }
+      60%  { transform: translateX(-50px) rotate(8deg) translateY(-8px); }
+      80%  { transform: translateX(-15px) rotate(-3deg) translateY(0); }
+      92%  { transform: translateX(-2px) rotate(6deg) scale(1.08, 0.88); } /* Hug squish! */
+      100% { transform: translateX(-2px) rotate(5deg) scale(1, 1); }
     }
 
     .teddy-right {
-      animation: teddyWalkFromFarRight 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation: teddyWaddleRight 2.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
     }
 
-    @keyframes teddyWalkFromFarLeft {
-      0% { transform: translateX(-240px) rotate(-12deg); }
-      40% { transform: translateX(-110px) rotate(6deg) translateY(-8px); }
-      75% { transform: translateX(-25px) rotate(-3deg); }
-      100% { transform: translateX(-6px) rotate(9deg); }
+    @keyframes teddyWaddleRight {
+      0%   { transform: translateX(220px) rotate(8deg) translateY(0); }
+      20%  { transform: translateX(160px) rotate(-8deg) translateY(-8px); }
+      40%  { transform: translateX(105px) rotate(8deg) translateY(0); }
+      60%  { transform: translateX(50px) rotate(-8deg) translateY(-8px); }
+      80%  { transform: translateX(15px) rotate(3deg) translateY(0); }
+      92%  { transform: translateX(2px) rotate(-6deg) scale(1.08, 0.88); } /* Hug squish! */
+      100% { transform: translateX(2px) rotate(-5deg) scale(1, 1); }
     }
 
-    @keyframes teddyWalkFromFarRight {
-      0% { transform: translateX(240px) rotate(12deg); }
-      40% { transform: translateX(110px) rotate(-6deg) translateY(-8px); }
-      75% { transform: translateX(25px) rotate(3deg); }
-      100% { transform: translateX(6px) rotate(-9deg); }
+    .arm-left-wrap {
+      transform-origin: 60px 65px;
+      animation: wrapArmRight 2.4s ease-out forwards;
+    }
+    @keyframes wrapArmRight {
+      0%, 75% { transform: rotate(10deg); }
+      92%, 100% { transform: rotate(40deg) translate(2px, -3px); }
     }
 
-    .tea-clink-stage {
-      position: absolute;
-      top: -20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      align-items: center;
-      gap: 12px;
+    .arm-right-wrap {
+      transform-origin: 40px 65px;
+      animation: wrapArmLeft 2.4s ease-out forwards;
+    }
+    @keyframes wrapArmLeft {
+      0%, 75% { transform: rotate(-10deg); }
+      92%, 100% { transform: rotate(-40deg) translate(-2px, -3px); }
+    }
+
+    .happy-eyes {
       opacity: 0;
-      animation: showTeaClink 2.6s ease-out forwards;
-      animation-delay: 2.2s;
+      animation: openHappyEyes 0.4s ease-in forwards;
+      animation-delay: 2s;
     }
-
-    @keyframes showTeaClink {
-      0% { transform: translateX(-50%) translateY(15px) scale(0.5); opacity: 0; }
-      50% { transform: translateX(-50%) translateY(-10px) scale(1.15); opacity: 1; }
-      100% { transform: translateX(-50%) translateY(-6px) scale(1); opacity: 1; }
+    .normal-eyes {
+      animation: hideNormalEyes 0.4s ease-in forwards;
+      animation-delay: 2s;
     }
+    @keyframes openHappyEyes { 0% { opacity: 0; } 100% { opacity: 1; } }
+    @keyframes hideNormalEyes { 0% { opacity: 1; } 100% { opacity: 0; } }
 
-    .tea-cup-icon {
-      width: 26px;
-      height: 26px;
-      filter: drop-shadow(0 0 6px rgba(255, 202, 40, 0.6));
-    }
-
-    .tea-cup-left { animation: cupCheersLeft 1.2s ease-in-out infinite alternate; }
-    .tea-cup-right { animation: cupCheersRight 1.2s ease-in-out infinite alternate; }
-
-    @keyframes cupCheersLeft {
-      0% { transform: rotate(-8deg); }
-      100% { transform: rotate(10deg); }
-    }
-    @keyframes cupCheersRight {
-      0% { transform: rotate(8deg); }
-      100% { transform: rotate(-10deg); }
-    }
-
+    /* Heart Burst */
     .hug-heart-burst {
       position: absolute;
-      font-size: 1.6rem;
+      font-size: 1.5rem;
       pointer-events: none;
       opacity: 0;
       animation: burstHearts 2.4s ease-out infinite;
       animation-delay: 2s;
     }
-
     .hug-heart-burst:nth-child(1) { top: 15px; left: 47%; animation-delay: 2.1s; }
-    .hug-heart-burst:nth-child(2) { top: -14px; left: 40%; animation-delay: 2.4s; }
-    .hug-heart-burst:nth-child(3) { top: 5px; left: 56%; animation-delay: 2.6s; }
-    .hug-heart-burst:nth-child(4) { top: -22px; left: 49%; font-size: 2.2rem; animation-delay: 2.8s; }
+    .hug-heart-burst:nth-child(2) { top: -14px; left: 40%; animation-delay: 2.3s; }
+    .hug-heart-burst:nth-child(3) { top: 5px; left: 56%; animation-delay: 2.5s; }
+    .hug-heart-burst:nth-child(4) { top: -20px; left: 49%; font-size: 2.1rem; animation-delay: 2.7s; }
 
     @keyframes burstHearts {
       0% { transform: translateY(10px) scale(0); opacity: 0; }
       50% { opacity: 1; transform: translateY(-28px) scale(1.3); }
-      100% { transform: translateY(-60px) scale(1); opacity: 0; }
+      100% { transform: translateY(-58px) scale(1); opacity: 0; }
+    }
+
+    /* ----------------------------------------------------
+       AFTER-HUG STEAMING CHAI & COFFEE CUPS ANIMATION
+    ---------------------------------------------------- */
+    .after-hug-treat-stage {
+      position: relative;
+      height: 70px;
+      width: 100%;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      animation: showTreatStage 1s ease-out forwards;
+      animation-delay: 2.8s; /* Appears after hug! */
+    }
+
+    @keyframes showTreatStage {
+      0%   { opacity: 0; transform: translateY(12px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Left Cup (Chai) slides in from left */
+    .treat-cup-left {
+      position: absolute;
+      animation: slideInChaiCup 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 2.9s;
+      transform: translateX(-140px);
+    }
+    @keyframes slideInChaiCup {
+      0%   { transform: translateX(-140px) rotate(-15deg); }
+      80%  { transform: translateX(-34px) rotate(8deg); }
+      100% { transform: translateX(-26px) rotate(4deg); }
+    }
+
+    /* Right Cup (Coffee) slides in from right */
+    .treat-cup-right {
+      position: absolute;
+      animation: slideInCoffeeCup 1.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      animation-delay: 2.9s;
+      transform: translateX(140px);
+    }
+    @keyframes slideInCoffeeCup {
+      0%   { transform: translateX(140px) rotate(15deg); }
+      80%  { transform: translateX(34px) rotate(-8deg); }
+      100% { transform: translateX(26px) rotate(-4deg); }
+    }
+
+    .steam-clink-spark {
+      position: absolute;
+      font-size: 1.1rem;
+      opacity: 0;
+      animation: sparkClink 0.8s ease-out forwards;
+      animation-delay: 4.1s;
+    }
+    @keyframes sparkClink {
+      0%   { transform: scale(0); opacity: 0; }
+      50%  { transform: scale(1.4); opacity: 1; }
+      100% { transform: scale(1); opacity: 0.9; }
+    }
+
+    /* Steaming bhaf waves */
+    .steam-line {
+      stroke: rgba(255, 255, 255, 0.75);
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      fill: none;
+      animation: steamRising 2s ease-in-out infinite;
+    }
+    .steam-line:nth-child(2) { animation-delay: 0.6s; }
+    .steam-line:nth-child(3) { animation-delay: 1.2s; }
+
+    @keyframes steamRising {
+      0%   { transform: translateY(0); opacity: 0; }
+      40%  { opacity: 0.8; }
+      100% { transform: translateY(-16px) translateX(2px); opacity: 0; }
+    }
+
+    .treat-status-text {
+      font-size: 0.82rem;
+      color: #fed7aa;
+      font-weight: 600;
+      margin-top: 4px;
     }
 
     .modal-subtitle {
       font-size: 0.88rem;
       color: #c4b5fd;
-      line-height: 1.5;
-      margin-bottom: 22px;
+      line-height: 1.45;
+      margin-bottom: 18px;
     }
 
     .enter-btn {
@@ -824,7 +982,7 @@
 </head>
 <body>
 
-  <!-- Sky Canvas for Stars, Fireflies & Skies -->
+  <!-- Sky Canvas for Stars, Fireflies & Twilight -->
   <canvas id="atmosphere-canvas"></canvas>
   <div class="ambient-mesh"></div>
 
@@ -839,27 +997,20 @@
   <!-- Floating Hearts Background -->
   <div class="floating-hearts-container" id="hearts-bg"></div>
 
-  <!-- Interactive Teddy Hug Modal -->
+  <!-- -----------------------------------------------------------------
+       CUTE INTRO MODAL: TEDDY HUG + STEAMING CHAI/COFFEE CLINK
+  ----------------------------------------------------------------- -->
   <div id="welcome-modal">
     <div class="modal-content-box" onclick="event.stopPropagation()">
-      <div class="greeting-badge" id="dynamic-greeting-badge">Good Evening ✨</div>
+      <div class="greeting-badge" id="dynamic-greeting-badge">Good Morning ☀️</div>
       <h2 class="greeting-title" id="dynamic-greeting-title">Bhanu & Gun</h2>
 
+      <!-- Teddies Waddling and Hugging -->
       <div class="teddy-stage">
         <div class="hug-heart-burst">💖</div>
         <div class="hug-heart-burst">🌸</div>
         <div class="hug-heart-burst">✨</div>
         <div class="hug-heart-burst">💕</div>
-
-        <div class="tea-clink-stage" id="tea-clink-box">
-          <svg class="tea-cup-icon tea-cup-left" viewBox="0 0 24 24" fill="#ffca28">
-            <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/>
-          </svg>
-          <span style="font-size:0.95rem;">☕✨</span>
-          <svg class="tea-cup-icon tea-cup-right" viewBox="0 0 24 24" fill="#ffca28">
-            <path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 5h-2V5h2v3zM4 19h16v2H4z"/>
-          </svg>
-        </div>
 
         <!-- Left Teddy (Bhanu) -->
         <div class="teddy-actor teddy-left">
@@ -873,11 +1024,19 @@
             <circle cx="50" cy="42" r="26" fill="#a0714b"/>
             <ellipse cx="50" cy="49" rx="13" ry="9" fill="#d7a982"/>
             <polygon points="46,45 54,45 50,50" fill="#3e2723"/>
-            <circle cx="41" cy="38" r="3.2" fill="#2d1d17"/>
-            <circle cx="59" cy="38" r="3.2" fill="#2d1d17"/>
-            <ellipse cx="36" cy="45" rx="4" ry="2.5" fill="#f48fb1" opacity="0.6"/>
-            <ellipse cx="64" cy="45" rx="4" ry="2.5" fill="#f48fb1" opacity="0.6"/>
-            <ellipse cx="68" cy="65" rx="16" ry="7.5" fill="#a0714b" transform="rotate(30 68 65)"/>
+            <g class="normal-eyes">
+              <circle cx="41" cy="38" r="3.2" fill="#2d1d17"/>
+              <circle cx="59" cy="38" r="3.2" fill="#2d1d17"/>
+            </g>
+            <!-- Happy Smiling Hug Eyes (^ ^) -->
+            <g class="happy-eyes" stroke="#2d1d17" stroke-width="2.5" fill="none" stroke-linecap="round">
+              <path d="M37,40 Q41,34 45,40"/>
+              <path d="M55,40 Q59,34 63,40"/>
+            </g>
+            <ellipse cx="36" cy="46" rx="4.5" ry="3" fill="#f48fb1" opacity="0.75"/>
+            <ellipse cx="64" cy="46" rx="4.5" ry="3" fill="#f48fb1" opacity="0.75"/>
+            <!-- Hug Arm -->
+            <ellipse class="arm-left-wrap" cx="68" cy="65" rx="17" ry="8" fill="#a0714b"/>
           </svg>
         </div>
 
@@ -888,6 +1047,7 @@
             <circle cx="72" cy="24" r="8" fill="#ebd0b5"/>
             <circle cx="28" cy="24" r="14" fill="#c69062"/>
             <circle cx="28" cy="24" r="8" fill="#ebd0b5"/>
+            <!-- Ribbon -->
             <ellipse cx="28" cy="16" rx="6" ry="4" fill="#b39ddb" transform="rotate(-20 28 16)"/>
             <ellipse cx="36" cy="18" rx="6" ry="4" fill="#b39ddb" transform="rotate(20 36 18)"/>
             <circle cx="32" cy="17" r="3" fill="#ffca28"/>
@@ -896,18 +1056,65 @@
             <circle cx="50" cy="42" r="26" fill="#c69062"/>
             <ellipse cx="50" cy="49" rx="13" ry="9" fill="#ebd0b5"/>
             <polygon points="46,45 54,45 50,50" fill="#3e2723"/>
-            <circle cx="41" cy="38" r="3.2" fill="#2d1d17"/>
-            <circle cx="59" cy="38" r="3.2" fill="#2d1d17"/>
-            <ellipse cx="36" cy="45" rx="4" ry="2.5" fill="#f48fb1" opacity="0.75"/>
-            <ellipse cx="64" cy="45" rx="4" ry="2.5" fill="#f48fb1" opacity="0.75"/>
-            <ellipse cx="32" cy="65" rx="16" ry="7.5" fill="#c69062" transform="rotate(-30 32 65)"/>
+            <g class="normal-eyes">
+              <circle cx="41" cy="38" r="3.2" fill="#2d1d17"/>
+              <circle cx="59" cy="38" r="3.2" fill="#2d1d17"/>
+            </g>
+            <!-- Happy Smiling Hug Eyes (^ ^) -->
+            <g class="happy-eyes" stroke="#2d1d17" stroke-width="2.5" fill="none" stroke-linecap="round">
+              <path d="M37,40 Q41,34 45,40"/>
+              <path d="M55,40 Q59,34 63,40"/>
+            </g>
+            <ellipse cx="36" cy="46" rx="4.5" ry="3" fill="#f48fb1" opacity="0.8"/>
+            <ellipse cx="64" cy="46" rx="4.5" ry="3" fill="#f48fb1" opacity="0.8"/>
+            <!-- Hug Arm -->
+            <ellipse class="arm-right-wrap" cx="32" cy="65" rx="17" ry="8" fill="#c69062"/>
           </svg>
         </div>
       </div>
 
+      <!-- After-Hug Sequence: Steaming Chai and Coffee Cups sliding in from Left & Right -->
+      <div class="after-hug-treat-stage">
+        
+        <!-- Left Steaming Chai Cup (Bhanu's Chai) -->
+        <div class="treat-cup-left">
+          <svg width="46" height="52" viewBox="0 0 46 52">
+            <!-- Rising Steam (Bhaf) -->
+            <path class="steam-line" d="M14,14 Q12,8 14,3"/>
+            <path class="steam-line" d="M20,13 Q22,7 20,2"/>
+            <path class="steam-line" d="M26,14 Q24,8 26,3"/>
+            <!-- Desi Chai Cup -->
+            <path d="M8,16 L32,16 L28,42 Q28,47 20,47 Q12,47 12,42 Z" fill="#d97706"/>
+            <!-- Warm chai tone -->
+            <ellipse cx="20" cy="16" rx="12" ry="3" fill="#fbbf24"/>
+            <path d="M30,22 Q37,22 37,28 Q37,34 29,34" stroke="#d97706" stroke-width="3.2" fill="none"/>
+          </svg>
+        </div>
+
+        <!-- Clink Spark -->
+        <div class="steam-clink-spark">✨</div>
+
+        <!-- Right Steaming Coffee Mug (Gun's Coffee) -->
+        <div class="treat-cup-right">
+          <svg width="46" height="52" viewBox="0 0 46 52">
+            <!-- Rising Steam (Bhaf) -->
+            <path class="steam-line" d="M16,14 Q18,8 16,3"/>
+            <path class="steam-line" d="M22,13 Q20,7 22,2"/>
+            <path class="steam-line" d="M28,14 Q30,8 28,3"/>
+            <!-- Cute Lavender Coffee Mug -->
+            <rect x="10" y="16" width="22" height="26" rx="5" fill="#a78bfa"/>
+            <ellipse cx="21" cy="17" rx="10" ry="2.5" fill="#78350f"/>
+            <path d="M32,22 Q39,22 39,29 Q39,36 32,36" stroke="#a78bfa" stroke-width="3.2" fill="none"/>
+          </svg>
+        </div>
+
+      </div>
+
+      <div class="treat-status-text" id="treat-timing-text">A warm cutting chai & coffee together ☕✨</div>
       <p class="modal-subtitle">Every microsecond brings us closer to November 3rd.<br>Together under the very same sky 🤍</p>
+      
       <button class="enter-btn" onclick="closeGreetingModal()">
-        <span>Open Our Countdown</span>
+        <span>Open Our Space</span>
         <span>✨</span>
       </button>
     </div>
@@ -916,7 +1123,9 @@
   <!-- Bottom Sunflower and Lavender Garden -->
   <div class="garden-wrapper" id="garden-container"></div>
 
-  <!-- Main Web Space -->
+  <!-- -----------------------------------------------------------------
+       MAIN APPLICATION SPACE
+  ----------------------------------------------------------------- -->
   <div class="app-container">
 
     <!-- Top Navigation Bar -->
@@ -981,93 +1190,131 @@
       </div>
     </section>
 
-    <!-- Weather Hub -->
-    <section class="weather-container">
+    <!-- -----------------------------------------------------------------
+         WEATHER HUB WITH SLEEPING & JUMPING CAT ACROSS NAME CARDS
+    ----------------------------------------------------------------- -->
+    <div class="weather-wrapper">
       
-      <!-- Bhanu Sharma (Todaraisingh) -->
-      <div class="weather-card" id="card-bhanu">
-        <div class="card-header-user">
-          <div>
-            <div class="user-name">
-              <span>Bhanu Sharma</span>
-              <svg class="icon-sun-svg" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="5" fill="#ffca28"/>
-                <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#ffca28" stroke-width="2.2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="user-location-sub">Todaraisingh, Rajasthan</div>
-          </div>
-          <div class="weather-condition-badge" id="bhanu-cond-badge">Syncing...</div>
-        </div>
-        <div class="weather-body">
-          <div>
-            <div class="temp-big" id="bhanu-temp">--°C</div>
-            <div class="temp-feels" id="bhanu-feels">Feels like --°C</div>
-          </div>
-          <div class="weather-icon-dynamic" id="bhanu-icon">
-            <svg viewBox="0 0 24 24" width="38" height="38" fill="#ffca28"><circle cx="12" cy="12" r="6"/></svg>
-          </div>
-        </div>
-        <div class="weather-stats-row">
-          <div>
-            <div class="stat-label">Humidity</div>
-            <div class="stat-value" id="bhanu-humidity">--%</div>
-          </div>
-          <div>
-            <div class="stat-label">Wind Speed</div>
-            <div class="stat-value" id="bhanu-wind">-- km/h</div>
-          </div>
-          <div>
-            <div class="stat-label">Local Time</div>
-            <div class="stat-value" id="bhanu-time">--:--</div>
-          </div>
+      <!-- Animated Cat: Sleeps -> Stretches (Angadaai) -> Walks -> Jumps to Gun -> Jumps off screen! -->
+      <div class="cat-track">
+        <div class="animated-kitty">
+          <svg viewBox="0 0 54 44" width="100%" height="100%">
+            <!-- Tail -->
+            <path d="M42,26 Q52,18 48,8" stroke="#f97316" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <!-- Body -->
+            <ellipse cx="28" cy="26" rx="16" ry="12" fill="#fb923c"/>
+            <ellipse cx="28" cy="27" rx="10" ry="8" fill="#fef08a" opacity="0.65"/>
+            <!-- Cute Back Legs -->
+            <circle cx="38" cy="33" r="4.5" fill="#ea580c"/>
+            <!-- Front Legs -->
+            <circle cx="16" cy="33" r="4.5" fill="#ea580c"/>
+            <!-- Head -->
+            <circle cx="15" cy="18" r="11" fill="#fb923c"/>
+            <!-- Ears -->
+            <polygon points="7,13 11,4 16,11" fill="#ea580c"/>
+            <polygon points="15,11 20,4 23,13" fill="#ea580c"/>
+            <polygon points="9,12 11,6 14,11" fill="#f472b6"/>
+            <!-- Face -->
+            <ellipse cx="11" cy="19" rx="1.6" ry="2" fill="#1e293b"/>
+            <ellipse cx="18" cy="19" rx="1.6" ry="2" fill="#1e293b"/>
+            <polygon points="14,21 16,21 15,23" fill="#f43f5e"/>
+            <!-- Whiskers -->
+            <line x1="6" y1="21" x2="1" y2="20" stroke="#fef08a" stroke-width="1.2"/>
+            <line x1="6" y1="23" x2="2" y2="25" stroke="#fef08a" stroke-width="1.2"/>
+            <line x1="21" y1="21" x2="26" y2="20" stroke="#fef08a" stroke-width="1.2"/>
+            <line x1="21" y1="23" x2="25" y2="25" stroke="#fef08a" stroke-width="1.2"/>
+          </svg>
         </div>
       </div>
 
-      <!-- Gun Goyal (Vanasthali, Niwai Tonk) -->
-      <div class="weather-card" id="card-gun">
-        <div class="card-header-user">
-          <div>
-            <div class="user-name">
-              <span>Gun Goyal</span>
-              <svg class="icon-flower-svg" viewBox="0 0 24 24" fill="#b39ddb">
-                <circle cx="12" cy="7" r="3"/>
-                <circle cx="12" cy="17" r="3"/>
-                <circle cx="7" cy="12" r="3"/>
-                <circle cx="17" cy="12" r="3"/>
-                <circle cx="12" cy="12" r="3.2" fill="#ffca28"/>
-              </svg>
+      <!-- Two Location Weather Hub -->
+      <section class="weather-container">
+        
+        <!-- Bhanu Sharma (Todaraisingh) -->
+        <div class="weather-card" id="card-bhanu">
+          <div class="card-header-user">
+            <div>
+              <div class="user-name">
+                <span>Bhanu Sharma</span>
+                <svg class="icon-sun-svg" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="5" fill="#ffca28"/>
+                  <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="#ffca28" stroke-width="2.2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="user-location-sub">Todaraisingh, Rajasthan</div>
             </div>
-            <div class="user-location-sub">Vanasthali, Niwai (Tonk)</div>
+            <div class="weather-condition-badge" id="bhanu-cond-badge">Syncing...</div>
           </div>
-          <div class="weather-condition-badge" id="gun-cond-badge">Syncing...</div>
+          <div class="weather-body">
+            <div>
+              <div class="temp-big" id="bhanu-temp">--°C</div>
+              <div class="temp-feels" id="bhanu-feels">Feels like --°C</div>
+            </div>
+            <div class="weather-icon-dynamic" id="bhanu-icon">
+              <svg viewBox="0 0 24 24" width="38" height="38" fill="#ffca28"><circle cx="12" cy="12" r="6"/></svg>
+            </div>
+          </div>
+          <div class="weather-stats-row">
+            <div>
+              <div class="stat-label">Humidity</div>
+              <div class="stat-value" id="bhanu-humidity">--%</div>
+            </div>
+            <div>
+              <div class="stat-label">Wind Speed</div>
+              <div class="stat-value" id="bhanu-wind">-- km/h</div>
+            </div>
+            <div>
+              <div class="stat-label">Local Time</div>
+              <div class="stat-value" id="bhanu-time">--:--</div>
+            </div>
+          </div>
         </div>
-        <div class="weather-body">
-          <div>
-            <div class="temp-big" id="gun-temp">--°C</div>
-            <div class="temp-feels" id="gun-feels">Feels like --°C</div>
-          </div>
-          <div class="weather-icon-dynamic" id="gun-icon">
-            <svg viewBox="0 0 24 24" width="38" height="38" fill="#ffca28"><circle cx="12" cy="12" r="6"/></svg>
-          </div>
-        </div>
-        <div class="weather-stats-row">
-          <div>
-            <div class="stat-label">Humidity</div>
-            <div class="stat-value" id="gun-humidity">--%</div>
-          </div>
-          <div>
-            <div class="stat-label">Wind Speed</div>
-            <div class="stat-value" id="gun-wind">-- km/h</div>
-          </div>
-          <div>
-            <div class="stat-label">Local Time</div>
-            <div class="stat-value" id="gun-time">--:--</div>
-          </div>
-        </div>
-      </div>
 
-    </section>
+        <!-- Gun Goyal (Vanasthali, Niwai Tonk) -->
+        <div class="weather-card" id="card-gun">
+          <div class="card-header-user">
+            <div>
+              <div class="user-name">
+                <span>Gun Goyal</span>
+                <svg class="icon-flower-svg" viewBox="0 0 24 24" fill="#b39ddb">
+                  <circle cx="12" cy="7" r="3"/>
+                  <circle cx="12" cy="17" r="3"/>
+                  <circle cx="7" cy="12" r="3"/>
+                  <circle cx="17" cy="12" r="3"/>
+                  <circle cx="12" cy="12" r="3.2" fill="#ffca28"/>
+                </svg>
+              </div>
+              <div class="user-location-sub">Vanasthali, Niwai (Tonk)</div>
+            </div>
+            <div class="weather-condition-badge" id="gun-cond-badge">Syncing...</div>
+          </div>
+          <div class="weather-body">
+            <div>
+              <div class="temp-big" id="gun-temp">--°C</div>
+              <div class="temp-feels" id="gun-feels">Feels like --°C</div>
+            </div>
+            <div class="weather-icon-dynamic" id="gun-icon">
+              <svg viewBox="0 0 24 24" width="38" height="38" fill="#ffca28"><circle cx="12" cy="12" r="6"/></svg>
+            </div>
+          </div>
+          <div class="weather-stats-row">
+            <div>
+              <div class="stat-label">Humidity</div>
+              <div class="stat-value" id="gun-humidity">--%</div>
+            </div>
+            <div>
+              <div class="stat-label">Wind Speed</div>
+              <div class="stat-value" id="gun-wind">-- km/h</div>
+            </div>
+            <div>
+              <div class="stat-label">Local Time</div>
+              <div class="stat-value" id="gun-time">--:--</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
 
     <!-- Micro Highlights Cards -->
     <section class="moments-grid">
@@ -1168,12 +1415,12 @@
 
   <script>
     /* =====================================================================
-       🎵 SPOTIFY SONGS CONFIGURATION (DIRECTLY EDIT HERE IN NOTEPAD):
-       Bas Spotify se gaane ka link copy karein aur in quotes " " ke andar daal dein!
-       Ye hamesha ke liye permanent save rahega aur Gun ko bhi yahi gaana dikhega!
+       🎵 SPOTIFY SONGS CONFIGURATION:
+       Bas yahan links daal dein aur GitHub par commit kar dein. 
+       Ye hamesha ke liye permanent save rahega!
     ===================================================================== */
-    const SONG_FOR_GUN   = "https://open.spotify.com/track/1BxfuPKGuaTgP7aM0XbdCe"; // <-- Gun ke liye yahan link daalein
-    const SONG_FOR_BHANU = "https://open.spotify.com/track/6qzX4aJ7eL7vJ5a8yqYVvA"; // <-- Bhanu ke liye yahan link daalein
+    const SONG_FOR_GUN   = "https://open.spotify.com/track/1BxfuPKGuaTgP7aM0XbdCe"; 
+    const SONG_FOR_BHANU = "https://open.spotify.com/track/6qzX4aJ7eL7vJ5a8yqYVvA"; 
     /* ===================================================================== */
 
     // Target: 3 November 2026, 08:00 AM IST
@@ -1186,18 +1433,15 @@
     };
 
     /* ----------------------------------------------------
-       1. Spotify Embed Engine (Supports any URL & Preserves)
+       1. Spotify Embed Logic
     ---------------------------------------------------- */
     function getEmbedUrlFromInput(input) {
       if (!input) return null;
       input = input.trim();
-      
-      // Match track, album, playlist or episode from Spotify URL
       const match = input.match(/(track|playlist|album|episode)\/([a-zA-Z0-9]+)/);
       if (match) {
         return `https://open.spotify.com/embed/${match[1]}/${match[2]}?utm_source=generator&theme=0`;
       }
-      // If direct alphanumeric ID was provided
       if (/^[a-zA-Z0-9]{20,24}$/.test(input)) {
         return `https://open.spotify.com/embed/track/${input}?utm_source=generator&theme=0`;
       }
@@ -1205,12 +1449,10 @@
     }
 
     function initSpotifyPlayers() {
-      // 1. Check URL parameters (e.g. ?gun=...&bhanu=...)
       const urlParams = new URLSearchParams(window.location.search);
       const urlGun = urlParams.get('gun');
       const urlBhanu = urlParams.get('bhanu');
 
-      // 2. Gun Player Setup
       let finalEmbedGun = getEmbedUrlFromInput(urlGun);
       if (!finalEmbedGun) {
         try {
@@ -1221,7 +1463,6 @@
       if (!finalEmbedGun) finalEmbedGun = getEmbedUrlFromInput(SONG_FOR_GUN);
       document.getElementById('spotify-frame-gun').src = finalEmbedGun;
 
-      // 3. Bhanu Player Setup
       let finalEmbedBhanu = getEmbedUrlFromInput(urlBhanu);
       if (!finalEmbedBhanu) {
         try {
@@ -1242,7 +1483,6 @@
           try {
             localStorage.setItem(`spotify_${person}`, input.trim());
           } catch(e) {}
-          alert(`Song updated! \n\nTip: To make it 100% permanent across all devices, open countdown.html in Notepad and paste it inside SONG_FOR_${person.toUpperCase()}!`);
         } else {
           alert('Please enter a valid Spotify song link.');
         }
@@ -1250,30 +1490,36 @@
     }
 
     /* ----------------------------------------------------
-       2. Greetings & Tea Time Clinking
+       2. Greetings & Meal-Time Adaptive Messages
     ---------------------------------------------------- */
     function setDynamicGreeting() {
       const now = new Date();
       const hour = now.getHours();
       let badgeText = "Good Evening ✨";
       let greetingTitle = "Warm Wishes, Gun & Bhanu";
+      let treatText = "A warm cutting chai & coffee together ☕✨";
 
       if (hour >= 4 && hour < 12) {
         badgeText = "Good Morning ☀️";
         greetingTitle = "Good Morning, Gun & Bhanu";
+        treatText = "Morning freshness with hot Chai & frothy Coffee ☕🥐";
       } else if (hour >= 12 && hour < 16) {
         badgeText = "Good Afternoon 🌤️";
         greetingTitle = "Good Afternoon, Gun & Bhanu";
-      } else if (hour >= 16 && hour < 21) {
+        treatText = "Lunch treats & sweet midday sips together 🥪✨☕";
+      } else if (hour >= 16 && hour < 20) {
         badgeText = "Good Evening 🌅";
         greetingTitle = "Good Evening, Gun & Bhanu";
+        treatText = "Evening golden hour with warm tea & coffee ☕✨";
       } else {
         badgeText = "Sweet Dreams 🌙✨";
         greetingTitle = "Good Night, Gun & Bhanu";
+        treatText = "Cozy night sips under the quiet stars 🍵🌙";
       }
 
       document.getElementById('dynamic-greeting-badge').textContent = badgeText;
       document.getElementById('dynamic-greeting-title').textContent = greetingTitle;
+      document.getElementById('treat-timing-text').textContent = treatText;
 
       const airplane = document.getElementById('day-airplane');
       if (hour >= 6 && hour <= 18) {
@@ -1349,7 +1595,6 @@
       elHeartbeats.textContent = approxBeatsLeft.toLocaleString('en-US');
       elNights.textContent = `${days} Nights`;
 
-      // Spawn a heart for every heartbeat tick
       if (seconds !== lastHeartbeatSec) {
         lastHeartbeatSec = seconds;
         spawnHeartbeatPulse();
@@ -1443,7 +1688,7 @@
       45: { text: "Gentle Fog", iconDay: "🌫️", iconNight: "🌫️" },
       51: { text: "Light Drizzle", iconDay: "🌦️", iconNight: "🌧️" },
       61: { text: "Gentle Rain", iconDay: "🌧️", iconNight: "🌧️" },
-      80: { text: "Passing Showers", iconDay: "🌦️", iconNight: "🌧" }
+      80: { text: "Passing Showers", iconDay: "🌦️", iconNight: "🌧️" }
     };
 
     async function syncWeather() {
@@ -1461,7 +1706,7 @@
         const avgWind = ((dataB.current?.wind_speed_10m || 8) + (dataG.current?.wind_speed_10m || 8)) / 2;
         adjustFlowerWind(avgWind);
       } catch (err) {
-        console.log("Weather sync notice", err);
+        console.log("Weather sync note", err);
       }
     }
 
@@ -1543,15 +1788,15 @@
       if (hour >= 5 && hour < 8) {
         grad.addColorStop(0, '#1c1328');
         grad.addColorStop(0.5, '#3b1c3c');
-        grad.addColorStop(1, '#ff8a65'); // Golden Sunrise
+        grad.addColorStop(1, '#ff8a65'); // Sunrise
       } else if (hour >= 8 && hour < 17) {
         grad.addColorStop(0, '#120f24');
         grad.addColorStop(0.5, '#1e163b');
-        grad.addColorStop(1, '#2c2250'); // Daylight
+        grad.addColorStop(1, '#2c2250'); // Day
       } else if (hour >= 17 && hour < 19) {
         grad.addColorStop(0, '#191124');
         grad.addColorStop(0.5, '#4a2545');
-        grad.addColorStop(1, '#ba68c8'); // Lavender Sunset
+        grad.addColorStop(1, '#ba68c8'); // Sunset Lavender
       } else {
         grad.addColorStop(0, '#090812');
         grad.addColorStop(0.5, '#120e24');
@@ -1561,7 +1806,7 @@
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
-      // Render Jugnu (Fireflies)
+      // Render Jugnu
       fireflies.forEach(f => {
         f.alpha += f.alphaDelta;
         if (f.alpha > 1 || f.alpha < 0) f.alphaDelta = -f.alphaDelta;
@@ -1651,7 +1896,7 @@
       }, 1600);
     }
 
-    // Startup
+    // Initialize all modules
     window.addEventListener('DOMContentLoaded', () => {
       setDynamicGreeting();
       resizeCanvas();
